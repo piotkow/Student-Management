@@ -38,6 +38,9 @@ namespace StudentManagement.Models.Entities
         [EmailAddress(ErrorMessage = "Invalid email address")]
         public string Email { get; set; }
 
+        public virtual Student Student { get; set; }
+        public virtual Instructor Instructor { get; set; }
+        public virtual ICollection<UserCourse> UserCourses { get; set; }
     }
 
 

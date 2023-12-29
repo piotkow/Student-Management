@@ -18,5 +18,9 @@ namespace StudentManagement.Models.Entities
         [StringLength(30)]
         public string CourseName { get; set; }
         public string Description { get; set; }
+        //public virtual ICollection<StudentCourse> StudentCourses { get; set; }
+        public virtual ICollection<UserCourse> UserCourses { get; set; }
+        public virtual ICollection<CourseTraining> CourseTrainings { get; set; }
+        public virtual Instructor Instructor { get; set; }
     }
 }

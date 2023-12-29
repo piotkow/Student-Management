@@ -20,12 +20,11 @@ namespace StudentManagement.Models.Entities
         [ForeignKey("Trainings")]
         public int TrainingID {  get; set; }
 
-        public Student Student { get; set; }
-        public Training Training { get; set; }
-
         [Required]
         [Range(1,100)]
         public float Score { get; set; }
         public string Remarks { get; set; }
+
+        public virtual Training Training { get; set; }
     }
 }

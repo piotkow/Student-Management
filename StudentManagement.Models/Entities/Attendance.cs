@@ -25,5 +25,7 @@ namespace StudentManagement.Models.Entities
 
         [Required]
         public bool Present { get; set; } 
+
+        public virtual Training Training { get; set;}
     }
 }

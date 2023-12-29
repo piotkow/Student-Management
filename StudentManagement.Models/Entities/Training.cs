@@ -26,5 +26,9 @@ namespace StudentManagement.Models.Entities
 
         [Required]
         public string Topic { get; set; }
+
+        public virtual ICollection<CourseTraining> CourseTrainings { get; set; }
+        public virtual ICollection<Attendance> Attendances { get; set; }
+        public virtual ICollection<Grade> Grades { get; set; }
     }
 }

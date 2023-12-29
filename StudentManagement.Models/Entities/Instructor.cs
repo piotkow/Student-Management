@@ -14,6 +14,9 @@ namespace StudentManagement.Models.Entities
         [Key]
         public int InstructorID { get; set; }
 
+        [ForeignKey("Users")]
+        public int UserID { get; set; }
+
         [Required]
         [StringLength(30)]
         public string FirstName { get; set; }
@@ -27,6 +30,11 @@ namespace StudentManagement.Models.Entities
         public DateTime DateOfBirth { get; set; }
         public string Phone { get; set; }
         public string Address { get; set; }
+
+        public virtual User User { get; set; }
+
+        public virtual ICollection<Course> Courses { get; set; }
+        public virtual ICollection<Coaching> Coachings { get; set; }
 
     }
 }

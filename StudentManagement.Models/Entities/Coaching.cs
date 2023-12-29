@@ -14,6 +14,9 @@ namespace StudentManagement.Models.Entities
         [Key]
         public int CoachingID { get; set; }
 
+        [ForeignKey("Instructors")]
+        public int InstructorID { get; set; }
+
         [Required]
         public string Location { get; set; }
 
@@ -29,5 +32,6 @@ namespace StudentManagement.Models.Entities
 
         [Required]
         public string Feedback { get; set; }
+        public virtual Instructor Instructor { get; set; }
     }
 }

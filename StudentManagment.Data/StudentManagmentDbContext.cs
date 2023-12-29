@@ -45,6 +45,13 @@ namespace StudentManagment.Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<UserCourse>()
+            .HasOne<User>(sc => sc.User)
+            .WithMany(c => c.UserCourses)
+            .HasForeignKey(sc => sc.CourseID)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
+
             // One-to-One relationship: User - Instructor
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Instructor)

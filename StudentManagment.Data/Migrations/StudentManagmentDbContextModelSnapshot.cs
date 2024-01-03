@@ -52,7 +52,7 @@ namespace StudentManagment.Data.Migrations
                         new
                         {
                             AttendanceID = 1,
-                            Date = new DateTime(2024, 2, 3, 12, 50, 24, 633, DateTimeKind.Local).AddTicks(8867),
+                            Date = new DateTime(2024, 2, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2128),
                             Present = true,
                             StudentID = 3,
                             TrainingID = 1
@@ -60,7 +60,7 @@ namespace StudentManagment.Data.Migrations
                         new
                         {
                             AttendanceID = 2,
-                            Date = new DateTime(2024, 3, 3, 12, 50, 24, 633, DateTimeKind.Local).AddTicks(8869),
+                            Date = new DateTime(2024, 3, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2130),
                             Present = false,
                             StudentID = 3,
                             TrainingID = 2
@@ -107,21 +107,21 @@ namespace StudentManagment.Data.Migrations
                         new
                         {
                             CoachingID = 1,
-                            EndDate = new DateTime(2024, 3, 3, 12, 50, 24, 633, DateTimeKind.Local).AddTicks(8855),
+                            EndDate = new DateTime(2024, 3, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2115),
                             Feedback = "Good performance",
                             InstructorID = 1,
                             Location = "Room X",
-                            StartDate = new DateTime(2024, 2, 3, 12, 50, 24, 633, DateTimeKind.Local).AddTicks(8854),
+                            StartDate = new DateTime(2024, 2, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2114),
                             Topic = "Advanced Programming"
                         },
                         new
                         {
                             CoachingID = 2,
-                            EndDate = new DateTime(2024, 4, 3, 12, 50, 24, 633, DateTimeKind.Local).AddTicks(8858),
+                            EndDate = new DateTime(2024, 4, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2119),
                             Feedback = "Excellent participation",
                             InstructorID = 2,
                             Location = "Room Y",
-                            StartDate = new DateTime(2024, 3, 3, 12, 50, 24, 633, DateTimeKind.Local).AddTicks(8857),
+                            StartDate = new DateTime(2024, 3, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2118),
                             Topic = "Advanced Physics"
                         });
                 });
@@ -129,7 +129,10 @@ namespace StudentManagment.Data.Migrations
             modelBuilder.Entity("StudentManagement.Models.Entities.Course", b =>
                 {
                     b.Property<int>("CourseID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CourseID"));
 
                     b.Property<string>("CourseName")
                         .IsRequired()
@@ -144,6 +147,8 @@ namespace StudentManagment.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("CourseID");
+
+                    b.HasIndex("InstructorID");
 
                     b.ToTable("Courses");
 
@@ -294,7 +299,7 @@ namespace StudentManagment.Data.Migrations
                         {
                             InstructorID = 1,
                             Address = "123 Main St",
-                            DateOfBirth = new DateTime(1994, 1, 3, 12, 50, 24, 633, DateTimeKind.Local).AddTicks(8758),
+                            DateOfBirth = new DateTime(1994, 1, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2016),
                             FirstName = "John",
                             LastName = "Doe",
                             Phone = "123456789",
@@ -304,7 +309,7 @@ namespace StudentManagment.Data.Migrations
                         {
                             InstructorID = 2,
                             Address = "456 Oak St",
-                            DateOfBirth = new DateTime(1996, 1, 3, 12, 50, 24, 633, DateTimeKind.Local).AddTicks(8802),
+                            DateOfBirth = new DateTime(1996, 1, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2059),
                             FirstName = "Jane",
                             LastName = "Smith",
                             Phone = "987654321",
@@ -383,25 +388,25 @@ namespace StudentManagment.Data.Migrations
                         new
                         {
                             TrainingID = 1,
-                            EndDate = new DateTime(2024, 3, 3, 12, 50, 24, 633, DateTimeKind.Local).AddTicks(8840),
+                            EndDate = new DateTime(2024, 3, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2100),
                             Location = "Room A",
-                            StartDate = new DateTime(2024, 2, 3, 12, 50, 24, 633, DateTimeKind.Local).AddTicks(8838),
+                            StartDate = new DateTime(2024, 2, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2096),
                             Topic = "Programming Basics"
                         },
                         new
                         {
                             TrainingID = 2,
-                            EndDate = new DateTime(2024, 4, 3, 12, 50, 24, 633, DateTimeKind.Local).AddTicks(8843),
+                            EndDate = new DateTime(2024, 4, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2103),
                             Location = "Room B",
-                            StartDate = new DateTime(2024, 3, 3, 12, 50, 24, 633, DateTimeKind.Local).AddTicks(8842),
+                            StartDate = new DateTime(2024, 3, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2102),
                             Topic = "Physics Fundamentals"
                         },
                         new
                         {
                             TrainingID = 3,
-                            EndDate = new DateTime(2024, 3, 3, 12, 50, 24, 633, DateTimeKind.Local).AddTicks(8846),
+                            EndDate = new DateTime(2024, 3, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2106),
                             Location = "Room C",
-                            StartDate = new DateTime(2024, 2, 3, 12, 50, 24, 633, DateTimeKind.Local).AddTicks(8845),
+                            StartDate = new DateTime(2024, 2, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2105),
                             Topic = "Math Basics"
                         });
                 });
@@ -521,7 +526,7 @@ namespace StudentManagment.Data.Migrations
                 {
                     b.HasOne("StudentManagement.Models.Entities.Instructor", "Instructor")
                         .WithMany("Courses")
-                        .HasForeignKey("CourseID")
+                        .HasForeignKey("InstructorID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

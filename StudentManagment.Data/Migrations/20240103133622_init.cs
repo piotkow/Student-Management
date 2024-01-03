@@ -165,7 +165,8 @@ namespace StudentManagment.Data.Migrations
                 name: "Courses",
                 columns: table => new
                 {
-                    CourseID = table.Column<int>(type: "int", nullable: false),
+                    CourseID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     InstructorID = table.Column<int>(type: "int", nullable: false),
                     CourseName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -174,8 +175,8 @@ namespace StudentManagment.Data.Migrations
                 {
                     table.PrimaryKey("PK_Courses", x => x.CourseID);
                     table.ForeignKey(
-                        name: "FK_Courses_Instructors_CourseID",
-                        column: x => x.CourseID,
+                        name: "FK_Courses_Instructors_InstructorID",
+                        column: x => x.InstructorID,
                         principalTable: "Instructors",
                         principalColumn: "InstructorID",
                         onDelete: ReferentialAction.Cascade);
@@ -230,18 +231,13 @@ namespace StudentManagment.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Courses",
-                columns: new[] { "CourseID", "CourseName", "Description", "InstructorID" },
-                values: new object[] { 3, "Mathematics Fundamentals", "Basic math concepts", 2 });
-
-            migrationBuilder.InsertData(
                 table: "Trainings",
                 columns: new[] { "TrainingID", "EndDate", "Location", "StartDate", "Topic" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 3, 3, 12, 50, 24, 633, DateTimeKind.Local).AddTicks(8840), "Room A", new DateTime(2024, 2, 3, 12, 50, 24, 633, DateTimeKind.Local).AddTicks(8838), "Programming Basics" },
-                    { 2, new DateTime(2024, 4, 3, 12, 50, 24, 633, DateTimeKind.Local).AddTicks(8843), "Room B", new DateTime(2024, 3, 3, 12, 50, 24, 633, DateTimeKind.Local).AddTicks(8842), "Physics Fundamentals" },
-                    { 3, new DateTime(2024, 3, 3, 12, 50, 24, 633, DateTimeKind.Local).AddTicks(8846), "Room C", new DateTime(2024, 2, 3, 12, 50, 24, 633, DateTimeKind.Local).AddTicks(8845), "Math Basics" }
+                    { 1, new DateTime(2024, 3, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2100), "Room A", new DateTime(2024, 2, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2096), "Programming Basics" },
+                    { 2, new DateTime(2024, 4, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2103), "Room B", new DateTime(2024, 3, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2102), "Physics Fundamentals" },
+                    { 3, new DateTime(2024, 3, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2106), "Room C", new DateTime(2024, 2, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2105), "Math Basics" }
                 });
 
             migrationBuilder.InsertData(
@@ -259,14 +255,9 @@ namespace StudentManagment.Data.Migrations
                 columns: new[] { "AttendanceID", "Date", "Present", "StudentID", "TrainingID" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 2, 3, 12, 50, 24, 633, DateTimeKind.Local).AddTicks(8867), true, 3, 1 },
-                    { 2, new DateTime(2024, 3, 3, 12, 50, 24, 633, DateTimeKind.Local).AddTicks(8869), false, 3, 2 }
+                    { 1, new DateTime(2024, 2, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2128), true, 3, 1 },
+                    { 2, new DateTime(2024, 3, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2130), false, 3, 2 }
                 });
-
-            migrationBuilder.InsertData(
-                table: "CourseTrainings",
-                columns: new[] { "CourseID", "TrainingID" },
-                values: new object[] { 3, 3 });
 
             migrationBuilder.InsertData(
                 table: "Grades",
@@ -282,22 +273,17 @@ namespace StudentManagment.Data.Migrations
                 columns: new[] { "InstructorID", "Address", "DateOfBirth", "FirstName", "LastName", "Phone", "UserID" },
                 values: new object[,]
                 {
-                    { 1, "123 Main St", new DateTime(1994, 1, 3, 12, 50, 24, 633, DateTimeKind.Local).AddTicks(8758), "John", "Doe", "123456789", 2 },
-                    { 2, "456 Oak St", new DateTime(1996, 1, 3, 12, 50, 24, 633, DateTimeKind.Local).AddTicks(8802), "Jane", "Smith", "987654321", 3 }
+                    { 1, "123 Main St", new DateTime(1994, 1, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2016), "John", "Doe", "123456789", 2 },
+                    { 2, "456 Oak St", new DateTime(1996, 1, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2059), "Jane", "Smith", "987654321", 3 }
                 });
-
-            migrationBuilder.InsertData(
-                table: "UserCourses",
-                columns: new[] { "CourseID", "UserID" },
-                values: new object[] { 3, 3 });
 
             migrationBuilder.InsertData(
                 table: "Coachings",
                 columns: new[] { "CoachingID", "EndDate", "Feedback", "InstructorID", "Location", "StartDate", "Topic" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 3, 3, 12, 50, 24, 633, DateTimeKind.Local).AddTicks(8855), "Good performance", 1, "Room X", new DateTime(2024, 2, 3, 12, 50, 24, 633, DateTimeKind.Local).AddTicks(8854), "Advanced Programming" },
-                    { 2, new DateTime(2024, 4, 3, 12, 50, 24, 633, DateTimeKind.Local).AddTicks(8858), "Excellent participation", 2, "Room Y", new DateTime(2024, 3, 3, 12, 50, 24, 633, DateTimeKind.Local).AddTicks(8857), "Advanced Physics" }
+                    { 1, new DateTime(2024, 3, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2115), "Good performance", 1, "Room X", new DateTime(2024, 2, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2114), "Advanced Programming" },
+                    { 2, new DateTime(2024, 4, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2119), "Excellent participation", 2, "Room Y", new DateTime(2024, 3, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2118), "Advanced Physics" }
                 });
 
             migrationBuilder.InsertData(
@@ -306,7 +292,8 @@ namespace StudentManagment.Data.Migrations
                 values: new object[,]
                 {
                     { 1, "Introduction to Programming", "Learn the basics of programming", 1 },
-                    { 2, "Physics 101", "Introduction to Physics", 1 }
+                    { 2, "Physics 101", "Introduction to Physics", 1 },
+                    { 3, "Mathematics Fundamentals", "Basic math concepts", 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -315,7 +302,8 @@ namespace StudentManagment.Data.Migrations
                 values: new object[,]
                 {
                     { 1, 1 },
-                    { 2, 2 }
+                    { 2, 2 },
+                    { 3, 3 }
                 });
 
             migrationBuilder.InsertData(
@@ -324,7 +312,8 @@ namespace StudentManagment.Data.Migrations
                 values: new object[,]
                 {
                     { 1, 3 },
-                    { 2, 3 }
+                    { 2, 3 },
+                    { 3, 3 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -335,6 +324,11 @@ namespace StudentManagment.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Coachings_InstructorID",
                 table: "Coachings",
+                column: "InstructorID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Courses_InstructorID",
+                table: "Courses",
                 column: "InstructorID");
 
             migrationBuilder.CreateIndex(

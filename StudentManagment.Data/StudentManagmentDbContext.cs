@@ -43,14 +43,14 @@ namespace StudentManagment.Data
                 .WithMany(c => c.UserCourses)
                 .HasForeignKey(sc => sc.CourseID)
                 .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<UserCourse>()
             .HasOne<User>(sc => sc.User)
             .WithMany(c => c.UserCourses)
             .HasForeignKey(sc => sc.CourseID)
             .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
 
             // One-to-One relationship: User - Instructor
             modelBuilder.Entity<User>()
@@ -82,7 +82,7 @@ namespace StudentManagment.Data
                 .WithMany(c => c.CourseTrainings)
                 .HasForeignKey(ct => ct.CourseID)
                 .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             // One-to-Many relationship: Training - CourseTraining
             modelBuilder.Entity<CourseTraining>()
@@ -90,7 +90,7 @@ namespace StudentManagment.Data
                 .WithMany(t => t.CourseTrainings)
                 .HasForeignKey(ct => ct.TrainingID)
                 .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             // One-to-Many relationship: Training - Attendance
             modelBuilder.Entity<Attendance>()

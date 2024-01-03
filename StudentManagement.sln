@@ -5,7 +5,7 @@ VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentManagement.Models", "StudentManagement.Models\StudentManagement.Models.csproj", "{11A11046-3F26-420E-B5AF-AECE5B297FE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentManagment.Data", "StudentManagment.Data\StudentManagment.Data.csproj", "{5C6681B2-D3A1-4026-AC30-D29B3CFBC03E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentManagment.Data", "StudentManagment.Data\StudentManagment.Data.csproj", "{5C6681B2-D3A1-4026-AC30-D29B3CFBC03E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

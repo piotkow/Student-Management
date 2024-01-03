@@ -13,7 +13,8 @@ namespace StudentManagement.Models.Entities
     {
         [Key]
         public int CourseID { get; set; }
-
+        [ForeignKey("Instructors")]
+        public int InstructorID { get; set; }
         [Required]
         [StringLength(30)]
         public string CourseName { get; set; }

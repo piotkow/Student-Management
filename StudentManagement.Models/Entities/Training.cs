@@ -13,8 +13,6 @@ namespace StudentManagement.Models.Entities
     {
         [Key]
         public int TrainingID { get; set; }
-        public Course Course { get; set; }
-
         [Required]
         public string Location { get; set; }
 

@@ -11,9 +11,9 @@ namespace StudentManagement.Models.Entities
     {
         [ForeignKey("Users")]
         public int UserID { get; set; }
-        public virtual User User { get; set; }
+        public User User { get; set; }
         [ForeignKey("Courses")]
         public int CourseID { get; set; }
-        public virtual Course Course { get; set; }
+        public Course Course { get; set; }
     }
 }

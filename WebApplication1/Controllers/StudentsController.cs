@@ -10,87 +10,90 @@ using StudentManagment.Data;
 
 namespace WebApplication1.Controllers
 {
-    public class UsersController : Controller
+    public class StudentsController : Controller
     {
         private readonly StudentManagmentDbContext _context;
 
-        public UsersController(StudentManagmentDbContext context)
+        public StudentsController(StudentManagmentDbContext context)
         {
             _context = context;
         }
 
-        // GET: Users
+        // GET: Students
         public async Task<IActionResult> Index()
         {
-              return _context.Users != null ? 
-                          View(await _context.Users.ToListAsync()) :
-                          Problem("Entity set 'StudentManagmentDbContext.Users'  is null.");
+            var studentManagmentDbContext = _context.Students.Include(s => s.User);
+            return View(await studentManagmentDbContext.ToListAsync());
         }
 
-        // GET: Users/Details/5
+        // GET: Students/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Users == null)
+            if (id == null || _context.Students == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.Users
-                .FirstOrDefaultAsync(m => m.UserID == id);
-            if (user == null)
+            var student = await _context.Students
+                .Include(s => s.User)
+                .FirstOrDefaultAsync(m => m.StudentID == id);
+            if (student == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(student);
         }
 
-        // GET: Users/Create
+        // GET: Students/Create
         public IActionResult Create()
         {
+            ViewData["UserID"] = new SelectList(_context.Users, "UserID", "Email");
             return View();
         }
 
-        // POST: Users/Create
+        // POST: Students/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserID,Username,Password,Role,Email")] User user)
+        public async Task<IActionResult> Create([Bind("StudentID,UserID,FirstName,LastName,DateOfBirth,Phone,Address")] Student student)
         {
-            //if (ModelState.IsValid)
-            //{
-                _context.Add(user);
+            if (ModelState.IsValid)
+            {
+                _context.Add(student);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            //}
-            return View(user);
+            }
+            ViewData["UserID"] = new SelectList(_context.Users, "UserID", "Email", student.UserID);
+            return View(student);
         }
 
-        // GET: Users/Edit/5
+        // GET: Students/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Users == null)
+            if (id == null || _context.Students == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
+            var student = await _context.Students.FindAsync(id);
+            if (student == null)
             {
                 return NotFound();
             }
-            return View(user);
+            ViewData["UserID"] = new SelectList(_context.Users, "UserID", "Email", student.UserID);
+            return View(student);
         }
 
-        // POST: Users/Edit/5
+        // POST: Students/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserID,Username,Password,Role,Email")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("StudentID,UserID,FirstName,LastName,DateOfBirth,Phone,Address")] Student student)
         {
-            if (id != user.UserID)
+            if (id != student.StudentID)
             {
                 return NotFound();
             }
@@ -99,12 +102,12 @@ namespace WebApplication1.Controllers
             {
                 try
                 {
-                    _context.Update(user);
+                    _context.Update(student);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserExists(user.UserID))
+                    if (!StudentExists(student.StudentID))
                     {
                         return NotFound();
                     }
@@ -115,49 +118,51 @@ namespace WebApplication1.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            ViewData["UserID"] = new SelectList(_context.Users, "UserID", "Email", student.UserID);
+            return View(student);
         }
 
-        // GET: Users/Delete/5
+        // GET: Students/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Users == null)
+            if (id == null || _context.Students == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.Users
-                .FirstOrDefaultAsync(m => m.UserID == id);
-            if (user == null)
+            var student = await _context.Students
+                .Include(s => s.User)
+                .FirstOrDefaultAsync(m => m.StudentID == id);
+            if (student == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(student);
         }
 
-        // POST: Users/Delete/5
+        // POST: Students/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Users == null)
+            if (_context.Students == null)
             {
-                return Problem("Entity set 'StudentManagmentDbContext.Users'  is null.");
+                return Problem("Entity set 'StudentManagmentDbContext.Students'  is null.");
             }
-            var user = await _context.Users.FindAsync(id);
-            if (user != null)
+            var student = await _context.Students.FindAsync(id);
+            if (student != null)
             {
-                _context.Users.Remove(user);
+                _context.Students.Remove(student);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UserExists(int id)
+        private bool StudentExists(int id)
         {
-          return (_context.Users?.Any(e => e.UserID == id)).GetValueOrDefault();
+          return (_context.Students?.Any(e => e.StudentID == id)).GetValueOrDefault();
         }
     }
 }

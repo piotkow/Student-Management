@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentManagment.Data;
 
@@ -11,9 +12,11 @@ using StudentManagment.Data;
 namespace StudentManagment.Data.Migrations
 {
     [DbContext(typeof(StudentManagmentDbContext))]
-    partial class StudentManagmentDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231229141516_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,24 +50,6 @@ namespace StudentManagment.Data.Migrations
                     b.HasIndex("TrainingID");
 
                     b.ToTable("Attendances");
-
-                    b.HasData(
-                        new
-                        {
-                            AttendanceID = 1,
-                            Date = new DateTime(2024, 2, 3, 12, 39, 31, 868, DateTimeKind.Local).AddTicks(8444),
-                            Present = true,
-                            StudentID = 3,
-                            TrainingID = 1
-                        },
-                        new
-                        {
-                            AttendanceID = 2,
-                            Date = new DateTime(2024, 3, 3, 12, 39, 31, 868, DateTimeKind.Local).AddTicks(8446),
-                            Present = false,
-                            StudentID = 3,
-                            TrainingID = 2
-                });
                 });
 
             modelBuilder.Entity("StudentManagement.Models.Entities.Coaching", b =>
@@ -102,28 +87,6 @@ namespace StudentManagment.Data.Migrations
                     b.HasIndex("InstructorID");
 
                     b.ToTable("Coachings");
-
-                    b.HasData(
-                        new
-                        {
-                            CoachingID = 1,
-                            EndDate = new DateTime(2024, 3, 3, 12, 39, 31, 868, DateTimeKind.Local).AddTicks(8432),
-                            Feedback = "Good performance",
-                            InstructorID = 1,
-                            Location = "Room X",
-                            StartDate = new DateTime(2024, 2, 3, 12, 39, 31, 868, DateTimeKind.Local).AddTicks(8431),
-                            Topic = "Advanced Programming"
-                        },
-                        new
-                        {
-                            CoachingID = 2,
-                            EndDate = new DateTime(2024, 4, 3, 12, 39, 31, 868, DateTimeKind.Local).AddTicks(8435),
-                            Feedback = "Excellent participation",
-                            InstructorID = 2,
-                            Location = "Room Y",
-                            StartDate = new DateTime(2024, 3, 3, 12, 39, 31, 868, DateTimeKind.Local).AddTicks(8434),
-                            Topic = "Advanced Physics"
-                });
                 });
 
             modelBuilder.Entity("StudentManagement.Models.Entities.Course", b =>
@@ -140,35 +103,9 @@ namespace StudentManagment.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("InstructorID")
-                        .HasColumnType("int");
-
                     b.HasKey("CourseID");
 
                     b.ToTable("Courses");
-
-                    b.HasData(
-                        new
-                        {
-                            CourseID = 1,
-                            CourseName = "Introduction to Programming",
-                            Description = "Learn the basics of programming",
-                            InstructorID = 1
-                        },
-                        new
-                        {
-                            CourseID = 2,
-                            CourseName = "Physics 101",
-                            Description = "Introduction to Physics",
-                            InstructorID = 1
-                        },
-                        new
-                        {
-                            CourseID = 3,
-                            CourseName = "Mathematics Fundamentals",
-                            Description = "Basic math concepts",
-                            InstructorID = 2
-                });
                 });
 
             modelBuilder.Entity("StudentManagement.Models.Entities.CourseTraining", b =>
@@ -184,23 +121,6 @@ namespace StudentManagment.Data.Migrations
                     b.HasIndex("TrainingID");
 
                     b.ToTable("CourseTrainings");
-
-                    b.HasData(
-                        new
-                        {
-                            CourseID = 1,
-                            TrainingID = 1
-                        },
-                        new
-                        {
-                            CourseID = 2,
-                            TrainingID = 2
-                        },
-                        new
-                        {
-                            CourseID = 3,
-                            TrainingID = 3
-                });
                 });
 
             modelBuilder.Entity("StudentManagement.Models.Entities.Grade", b =>
@@ -229,24 +149,6 @@ namespace StudentManagment.Data.Migrations
                     b.HasIndex("TrainingID");
 
                     b.ToTable("Grades");
-
-                    b.HasData(
-                        new
-                        {
-                            GradeID = 1,
-                            Remarks = "Good performance",
-                            Score = 90f,
-                            StudentID = 3,
-                            TrainingID = 1
-                        },
-                        new
-                        {
-                            GradeID = 2,
-                            Remarks = "Excellent work",
-                            Score = 95f,
-                            StudentID = 3,
-                            TrainingID = 2
-                });
                 });
 
             modelBuilder.Entity("StudentManagement.Models.Entities.Instructor", b =>
@@ -288,28 +190,6 @@ namespace StudentManagment.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Instructors");
-
-                    b.HasData(
-                        new
-                        {
-                            InstructorID = 1,
-                            Address = "123 Main St",
-                            DateOfBirth = new DateTime(1994, 1, 3, 12, 39, 31, 868, DateTimeKind.Local).AddTicks(8331),
-                            FirstName = "John",
-                            LastName = "Doe",
-                            Phone = "123456789",
-                            UserID = 2
-                        },
-                        new
-                        {
-                            InstructorID = 2,
-                            Address = "456 Oak St",
-                            DateOfBirth = new DateTime(1996, 1, 3, 12, 39, 31, 868, DateTimeKind.Local).AddTicks(8376),
-                            FirstName = "Jane",
-                            LastName = "Smith",
-                            Phone = "987654321",
-                            UserID = 3
-                        });
                 });
 
             modelBuilder.Entity("StudentManagement.Models.Entities.Student", b =>
@@ -383,32 +263,6 @@ namespace StudentManagment.Data.Migrations
                     b.HasIndex("CourseID");
 
                     b.ToTable("Trainings");
-
-                    b.HasData(
-                        new
-                        {
-                            TrainingID = 1,
-                            EndDate = new DateTime(2024, 3, 3, 12, 39, 31, 868, DateTimeKind.Local).AddTicks(8417),
-                            Location = "Room A",
-                            StartDate = new DateTime(2024, 2, 3, 12, 39, 31, 868, DateTimeKind.Local).AddTicks(8413),
-                            Topic = "Programming Basics"
-                        },
-                        new
-                        {
-                            TrainingID = 2,
-                            EndDate = new DateTime(2024, 4, 3, 12, 39, 31, 868, DateTimeKind.Local).AddTicks(8420),
-                            Location = "Room B",
-                            StartDate = new DateTime(2024, 3, 3, 12, 39, 31, 868, DateTimeKind.Local).AddTicks(8419),
-                            Topic = "Physics Fundamentals"
-                        },
-                        new
-                        {
-                            TrainingID = 3,
-                            EndDate = new DateTime(2024, 3, 3, 12, 39, 31, 868, DateTimeKind.Local).AddTicks(8422),
-                            Location = "Room C",
-                            StartDate = new DateTime(2024, 2, 3, 12, 39, 31, 868, DateTimeKind.Local).AddTicks(8421),
-                            Topic = "Math Basics"
-                        });
                 });
 
             modelBuilder.Entity("StudentManagement.Models.Entities.User", b =>
@@ -440,32 +294,6 @@ namespace StudentManagment.Data.Migrations
                     b.HasKey("UserID");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            UserID = 1,
-                            Email = "admin@example.com",
-                            Password = "Admin123",
-                            Role = 0,
-                            Username = "AdminUser"
-                        },
-                        new
-                        {
-                            UserID = 2,
-                            Email = "instructor@example.com",
-                            Password = "Instructor123",
-                            Role = 1,
-                            Username = "InstructorUser"
-                        },
-                        new
-                        {
-                            UserID = 3,
-                            Email = "student@example.com",
-                            Password = "Student123",
-                            Role = 2,
-                            Username = "StudentUser"
-                        });
                 });
 
             modelBuilder.Entity("StudentManagement.Models.Entities.UserCourse", b =>
@@ -481,23 +309,6 @@ namespace StudentManagment.Data.Migrations
                     b.HasIndex("CourseID");
 
                     b.ToTable("UserCourses");
-
-                    b.HasData(
-                        new
-                        {
-                            UserID = 3,
-                            CourseID = 1
-                        },
-                        new
-                        {
-                            UserID = 3,
-                            CourseID = 2
-                        },
-                        new
-                        {
-                            UserID = 3,
-                            CourseID = 3
-                        });
                 });
 
             modelBuilder.Entity("StudentManagement.Models.Entities.Attendance", b =>

@@ -64,7 +64,7 @@ namespace StudentManagment.Data
             modelBuilder.Entity<Course>()
                 .HasOne(c => c.Instructor)
                 .WithMany(i => i.Courses)
-                .HasForeignKey(i => i.CourseID)
+                .HasForeignKey(i => i.InstructorID)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 

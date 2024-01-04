@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace StudentManagment.Data.Repositories.Interfaces
 {
-    public interface ICoachingInterface : IDisposable
+    public interface ICoachingRepository : IDisposable
     {
         IEnumerable<Coaching> GetCoachings();
         Coaching GetCoachingById(int id);

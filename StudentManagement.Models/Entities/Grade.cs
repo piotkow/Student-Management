@@ -15,7 +15,7 @@ namespace StudentManagement.Models.Entities
         public int GradeID { get; set; }
 
         [ForeignKey("Students")]
-        public int StudentID { get; set; }
+        public int UserID { get; set; }
 
         [ForeignKey("Trainings")]
         public int TrainingID {  get; set; }

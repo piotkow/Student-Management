@@ -52,9 +52,8 @@ namespace StudentManagement.Models.Entities
         public DateTime DateOfBirth { get; set; }
 
         public string Phone { get; set; }
-        public string Address { get; set; }
         public virtual ICollection<UserCourse> UserCourses { get; set; }
-        public virtual ICollection<UserCoaching> UserCoaching { get; set; }
+        public virtual ICollection<UserCoaching> UserCoachings { get; set; }
 
         public virtual ICollection<Attendance> Attendances { get; set; }
 

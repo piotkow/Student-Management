@@ -29,6 +29,6 @@ namespace StudentManagement.Models.Entities
 
         [Required]
         public string Feedback { get; set; }
-        public virtual ICollection<UserCoaching> UserCoaching { get; set; }
+        public virtual ICollection<UserCoaching> UserCoachings { get; set; }
     }
 }

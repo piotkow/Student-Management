@@ -26,5 +26,7 @@ namespace StudentManagement.Models.Entities
         public string Remarks { get; set; }
 
         public virtual Training Training { get; set; }
+
+        public virtual User User { get; set; }
     }
 }

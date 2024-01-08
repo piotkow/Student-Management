@@ -12,6 +12,9 @@ namespace StudentManagement.Models.Entities
         [ForeignKey("Users")]
         public int UserID { get; set; }
         public User User { get; set; }
+
+        public Role Role { get; set; }
+
         [ForeignKey("Courses")]
         public int CourseID { get; set; }
         public Course Course { get; set; }

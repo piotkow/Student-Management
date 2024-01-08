@@ -36,15 +36,17 @@ namespace StudentManagment.Data.Migrations
                     b.Property<bool>("Present")
                         .HasColumnType("bit");
 
-                    b.Property<int>("StudentID")
+                    b.Property<int>("TrainingID")
                         .HasColumnType("int");
 
-                    b.Property<int>("TrainingID")
+                    b.Property<int>("UserID")
                         .HasColumnType("int");
 
                     b.HasKey("AttendanceID");
 
                     b.HasIndex("TrainingID");
+
+                    b.HasIndex("UserID");
 
                     b.ToTable("Attendances");
 
@@ -52,18 +54,18 @@ namespace StudentManagment.Data.Migrations
                         new
                         {
                             AttendanceID = 1,
-                            Date = new DateTime(2024, 2, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2128),
+                            Date = new DateTime(2024, 2, 8, 16, 36, 14, 876, DateTimeKind.Local).AddTicks(4025),
                             Present = true,
-                            StudentID = 3,
-                            TrainingID = 1
+                            TrainingID = 1,
+                            UserID = 3
                         },
                         new
                         {
                             AttendanceID = 2,
-                            Date = new DateTime(2024, 3, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2130),
+                            Date = new DateTime(2024, 3, 8, 16, 36, 14, 876, DateTimeKind.Local).AddTicks(4027),
                             Present = false,
-                            StudentID = 3,
-                            TrainingID = 2
+                            TrainingID = 2,
+                            UserID = 3
                         });
                 });
 
@@ -82,9 +84,6 @@ namespace StudentManagment.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("InstructorID")
-                        .HasColumnType("int");
-
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -99,29 +98,25 @@ namespace StudentManagment.Data.Migrations
 
                     b.HasKey("CoachingID");
 
-                    b.HasIndex("InstructorID");
-
                     b.ToTable("Coachings");
 
                     b.HasData(
                         new
                         {
                             CoachingID = 1,
-                            EndDate = new DateTime(2024, 3, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2115),
+                            EndDate = new DateTime(2024, 3, 8, 16, 36, 14, 876, DateTimeKind.Local).AddTicks(4002),
                             Feedback = "Good performance",
-                            InstructorID = 1,
                             Location = "Room X",
-                            StartDate = new DateTime(2024, 2, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2114),
+                            StartDate = new DateTime(2024, 2, 8, 16, 36, 14, 876, DateTimeKind.Local).AddTicks(4000),
                             Topic = "Advanced Programming"
                         },
                         new
                         {
                             CoachingID = 2,
-                            EndDate = new DateTime(2024, 4, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2119),
+                            EndDate = new DateTime(2024, 4, 8, 16, 36, 14, 876, DateTimeKind.Local).AddTicks(4006),
                             Feedback = "Excellent participation",
-                            InstructorID = 2,
                             Location = "Room Y",
-                            StartDate = new DateTime(2024, 3, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2118),
+                            StartDate = new DateTime(2024, 3, 8, 16, 36, 14, 876, DateTimeKind.Local).AddTicks(4005),
                             Topic = "Advanced Physics"
                         });
                 });
@@ -143,12 +138,7 @@ namespace StudentManagment.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("InstructorID")
-                        .HasColumnType("int");
-
                     b.HasKey("CourseID");
-
-                    b.HasIndex("InstructorID");
 
                     b.ToTable("Courses");
 
@@ -157,22 +147,19 @@ namespace StudentManagment.Data.Migrations
                         {
                             CourseID = 1,
                             CourseName = "Introduction to Programming",
-                            Description = "Learn the basics of programming",
-                            InstructorID = 1
+                            Description = "Learn the basics of programming"
                         },
                         new
                         {
                             CourseID = 2,
                             CourseName = "Physics 101",
-                            Description = "Introduction to Physics",
-                            InstructorID = 1
+                            Description = "Introduction to Physics"
                         },
                         new
                         {
                             CourseID = 3,
                             CourseName = "Mathematics Fundamentals",
-                            Description = "Basic math concepts",
-                            InstructorID = 2
+                            Description = "Basic math concepts"
                         });
                 });
 
@@ -223,15 +210,17 @@ namespace StudentManagment.Data.Migrations
                     b.Property<float>("Score")
                         .HasColumnType("real");
 
-                    b.Property<int>("StudentID")
+                    b.Property<int>("TrainingID")
                         .HasColumnType("int");
 
-                    b.Property<int>("TrainingID")
+                    b.Property<int>("UserID")
                         .HasColumnType("int");
 
                     b.HasKey("GradeID");
 
                     b.HasIndex("TrainingID");
+
+                    b.HasIndex("UserID");
 
                     b.ToTable("Grades");
 
@@ -241,121 +230,17 @@ namespace StudentManagment.Data.Migrations
                             GradeID = 1,
                             Remarks = "Good performance",
                             Score = 90f,
-                            StudentID = 3,
-                            TrainingID = 1
+                            TrainingID = 1,
+                            UserID = 3
                         },
                         new
                         {
                             GradeID = 2,
                             Remarks = "Excellent work",
                             Score = 95f,
-                            StudentID = 3,
-                            TrainingID = 2
-                        });
-                });
-
-            modelBuilder.Entity("StudentManagement.Models.Entities.Instructor", b =>
-                {
-                    b.Property<int>("InstructorID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InstructorID"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasMaxLength(20)
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
-
-                    b.HasKey("InstructorID");
-
-                    b.HasIndex("UserID")
-                        .IsUnique();
-
-                    b.ToTable("Instructors");
-
-                    b.HasData(
-                        new
-                        {
-                            InstructorID = 1,
-                            Address = "123 Main St",
-                            DateOfBirth = new DateTime(1994, 1, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2016),
-                            FirstName = "John",
-                            LastName = "Doe",
-                            Phone = "123456789",
-                            UserID = 2
-                        },
-                        new
-                        {
-                            InstructorID = 2,
-                            Address = "456 Oak St",
-                            DateOfBirth = new DateTime(1996, 1, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2059),
-                            FirstName = "Jane",
-                            LastName = "Smith",
-                            Phone = "987654321",
+                            TrainingID = 2,
                             UserID = 3
                         });
-                });
-
-            modelBuilder.Entity("StudentManagement.Models.Entities.Student", b =>
-                {
-                    b.Property<int>("StudentID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentID"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasMaxLength(20)
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
-
-                    b.HasKey("StudentID");
-
-                    b.HasIndex("UserID")
-                        .IsUnique();
-
-                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("StudentManagement.Models.Entities.Training", b =>
@@ -388,25 +273,25 @@ namespace StudentManagment.Data.Migrations
                         new
                         {
                             TrainingID = 1,
-                            EndDate = new DateTime(2024, 3, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2100),
+                            EndDate = new DateTime(2024, 3, 8, 16, 36, 14, 876, DateTimeKind.Local).AddTicks(3979),
                             Location = "Room A",
-                            StartDate = new DateTime(2024, 2, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2096),
+                            StartDate = new DateTime(2024, 2, 8, 16, 36, 14, 876, DateTimeKind.Local).AddTicks(3932),
                             Topic = "Programming Basics"
                         },
                         new
                         {
                             TrainingID = 2,
-                            EndDate = new DateTime(2024, 4, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2103),
+                            EndDate = new DateTime(2024, 4, 8, 16, 36, 14, 876, DateTimeKind.Local).AddTicks(3984),
                             Location = "Room B",
-                            StartDate = new DateTime(2024, 3, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2102),
+                            StartDate = new DateTime(2024, 3, 8, 16, 36, 14, 876, DateTimeKind.Local).AddTicks(3983),
                             Topic = "Physics Fundamentals"
                         },
                         new
                         {
                             TrainingID = 3,
-                            EndDate = new DateTime(2024, 3, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2106),
+                            EndDate = new DateTime(2024, 3, 8, 16, 36, 14, 876, DateTimeKind.Local).AddTicks(3988),
                             Location = "Room C",
-                            StartDate = new DateTime(2024, 2, 3, 14, 36, 22, 740, DateTimeKind.Local).AddTicks(2105),
+                            StartDate = new DateTime(2024, 2, 8, 16, 36, 14, 876, DateTimeKind.Local).AddTicks(3987),
                             Topic = "Math Basics"
                         });
                 });
@@ -419,7 +304,21 @@ namespace StudentManagment.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserID"));
 
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasMaxLength(20)
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
@@ -428,6 +327,10 @@ namespace StudentManagment.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Role")
                         .HasColumnType("int");
@@ -445,26 +348,76 @@ namespace StudentManagment.Data.Migrations
                         new
                         {
                             UserID = 1,
+                            DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@example.com",
+                            FirstName = "Admin",
+                            LastName = "Admin",
                             Password = "Admin123",
+                            Phone = "123-456-789",
                             Role = 0,
                             Username = "AdminUser"
                         },
                         new
                         {
                             UserID = 2,
+                            DateOfBirth = new DateTime(1980, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "instructor@example.com",
+                            FirstName = "Instructor",
+                            LastName = "Instructor",
                             Password = "Instructor123",
+                            Phone = "987-654-321",
                             Role = 1,
                             Username = "InstructorUser"
                         },
                         new
                         {
                             UserID = 3,
+                            DateOfBirth = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "student@example.com",
+                            FirstName = "Student",
+                            LastName = "Student",
                             Password = "Student123",
+                            Phone = "555-123-456",
                             Role = 2,
                             Username = "StudentUser"
+                        });
+                });
+
+            modelBuilder.Entity("StudentManagement.Models.Entities.UserCoaching", b =>
+                {
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CoachingID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserID", "CoachingID");
+
+                    b.HasIndex("CoachingID");
+
+                    b.ToTable("UserCoachings");
+
+                    b.HasData(
+                        new
+                        {
+                            UserID = 3,
+                            CoachingID = 1,
+                            Role = 2
+                        },
+                        new
+                        {
+                            UserID = 3,
+                            CoachingID = 2,
+                            Role = 2
+                        },
+                        new
+                        {
+                            UserID = 2,
+                            CoachingID = 1,
+                            Role = 1
                         });
                 });
 
@@ -474,6 +427,9 @@ namespace StudentManagment.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CourseID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Role")
                         .HasColumnType("int");
 
                     b.HasKey("UserID", "CourseID");
@@ -486,17 +442,20 @@ namespace StudentManagment.Data.Migrations
                         new
                         {
                             UserID = 3,
-                            CourseID = 1
+                            CourseID = 1,
+                            Role = 2
                         },
                         new
                         {
                             UserID = 3,
-                            CourseID = 2
+                            CourseID = 2,
+                            Role = 2
                         },
                         new
                         {
-                            UserID = 3,
-                            CourseID = 3
+                            UserID = 2,
+                            CourseID = 3,
+                            Role = 1
                         });
                 });
 
@@ -508,29 +467,15 @@ namespace StudentManagment.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("StudentManagement.Models.Entities.User", "User")
+                        .WithMany("Attendances")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Training");
-                });
 
-            modelBuilder.Entity("StudentManagement.Models.Entities.Coaching", b =>
-                {
-                    b.HasOne("StudentManagement.Models.Entities.Instructor", "Instructor")
-                        .WithMany("Coachings")
-                        .HasForeignKey("InstructorID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Instructor");
-                });
-
-            modelBuilder.Entity("StudentManagement.Models.Entities.Course", b =>
-                {
-                    b.HasOne("StudentManagement.Models.Entities.Instructor", "Instructor")
-                        .WithMany("Courses")
-                        .HasForeignKey("InstructorID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Instructor");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("StudentManagement.Models.Entities.CourseTraining", b =>
@@ -560,27 +505,32 @@ namespace StudentManagment.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Training");
-                });
-
-            modelBuilder.Entity("StudentManagement.Models.Entities.Instructor", b =>
-                {
                     b.HasOne("StudentManagement.Models.Entities.User", "User")
-                        .WithOne("Instructor")
-                        .HasForeignKey("StudentManagement.Models.Entities.Instructor", "UserID")
+                        .WithMany("Grades")
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Training");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("StudentManagement.Models.Entities.Student", b =>
+            modelBuilder.Entity("StudentManagement.Models.Entities.UserCoaching", b =>
                 {
-                    b.HasOne("StudentManagement.Models.Entities.User", "User")
-                        .WithOne("Student")
-                        .HasForeignKey("StudentManagement.Models.Entities.Student", "UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("StudentManagement.Models.Entities.Coaching", "Coaching")
+                        .WithMany("UserCoachings")
+                        .HasForeignKey("CoachingID")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("StudentManagement.Models.Entities.User", "User")
+                        .WithMany("UserCoachings")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Coaching");
 
                     b.Navigation("User");
                 });
@@ -595,7 +545,7 @@ namespace StudentManagment.Data.Migrations
 
                     b.HasOne("StudentManagement.Models.Entities.User", "User")
                         .WithMany("UserCourses")
-                        .HasForeignKey("CourseID")
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -604,18 +554,16 @@ namespace StudentManagment.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("StudentManagement.Models.Entities.Coaching", b =>
+                {
+                    b.Navigation("UserCoachings");
+                });
+
             modelBuilder.Entity("StudentManagement.Models.Entities.Course", b =>
                 {
                     b.Navigation("CourseTrainings");
 
                     b.Navigation("UserCourses");
-                });
-
-            modelBuilder.Entity("StudentManagement.Models.Entities.Instructor", b =>
-                {
-                    b.Navigation("Coachings");
-
-                    b.Navigation("Courses");
                 });
 
             modelBuilder.Entity("StudentManagement.Models.Entities.Training", b =>
@@ -629,11 +577,11 @@ namespace StudentManagment.Data.Migrations
 
             modelBuilder.Entity("StudentManagement.Models.Entities.User", b =>
                 {
-                    b.Navigation("Instructor")
-                        .IsRequired();
+                    b.Navigation("Attendances");
 
-                    b.Navigation("Student")
-                        .IsRequired();
+                    b.Navigation("Grades");
+
+                    b.Navigation("UserCoachings");
 
                     b.Navigation("UserCourses");
                 });

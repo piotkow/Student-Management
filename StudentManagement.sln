@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentManagement.Models", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentManagment.Data", "StudentManagment.Data\StudentManagment.Data.csproj", "{5C6681B2-D3A1-4026-AC30-D29B3CFBC03E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{CD97D495-EE5D-461A-9642-BEF55EADAD2A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{5C6681B2-D3A1-4026-AC30-D29B3CFBC03E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C6681B2-D3A1-4026-AC30-D29B3CFBC03E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C6681B2-D3A1-4026-AC30-D29B3CFBC03E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CD97D495-EE5D-461A-9642-BEF55EADAD2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CD97D495-EE5D-461A-9642-BEF55EADAD2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CD97D495-EE5D-461A-9642-BEF55EADAD2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CD97D495-EE5D-461A-9642-BEF55EADAD2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

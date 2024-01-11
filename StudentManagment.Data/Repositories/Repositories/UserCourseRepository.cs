@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace StudentManagment.Data.Repositories.Repositories
 {
-    public class UserCourseRepository : IUserCourseRepository, IDisposable
+    public class UserCourseRepository : IUserCourseRepository
     {
         private StudentManagmentDbContext _context;
 
@@ -18,46 +18,48 @@ namespace StudentManagment.Data.Repositories.Repositories
             this._context = context;
         }
 
-        public IEnumerable<UserCourse> GetUserCourses()
+        public async Task<IEnumerable<UserCourse>> GetUserCoursesAsync()
         {
-            return _context.UserCourses.ToList();
+            return await _context.UserCourses.ToListAsync();
         }
 
-        public UserCourse GetUserCourseById(int id)
+        public async Task<UserCourse> GetUserCourseByIdAsync(int userId, int courseId)
         {
-            return _context.UserCourses.Find(id);
+            return await _context.UserCourses
+                .FirstOrDefaultAsync(uc => uc.UserID == userId && uc.CourseID == courseId);
         }
 
-        public void InsertUserCourse(UserCourse userCourse)
+        public async Task InsertUserCourseAsync(UserCourse userCourse)
         {
-            _context.UserCourses.Add(userCourse);
+            await _context.UserCourses.AddAsync(userCourse);
         }
 
-        public void UpdateUserCourse(UserCourse userCourse)
+        public async Task UpdateUserCourseAsync(UserCourse userCourse)
         {
             _context.Entry(userCourse).State = EntityState.Modified;
         }
 
-        public void DeleteUserCourse(int id)
+        public async Task DeleteUserCourseAsync(int userId, int courseId)
         {
-            UserCourse userCourse = _context.UserCourses.Find(id);
+            UserCourse userCourse = await _context.UserCourses
+                .FirstOrDefaultAsync(uc => uc.UserID == userId && uc.CourseID == courseId);
             _context.UserCourses.Remove(userCourse);
         }
 
-        public void Save()
+        public async Task SaveAsync()
         {
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         private bool disposed = false;
 
-        protected virtual void Dispose(bool disposing)
+        protected virtual async void Dispose(bool disposing)
         {
             if (!this.disposed)
             {
                 if (disposing)
                 {
-                    _context.Dispose();
+                    await _context.DisposeAsync();
                 }
             }
             this.disposed = true;
@@ -69,4 +71,5 @@ namespace StudentManagment.Data.Repositories.Repositories
             GC.SuppressFinalize(this);
         }
     }
+
 }

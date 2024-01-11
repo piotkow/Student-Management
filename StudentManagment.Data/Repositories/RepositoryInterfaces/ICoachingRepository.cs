@@ -10,11 +10,11 @@ namespace StudentManagment.Data.Repositories.Interfaces
 {
     public interface ICoachingRepository : IDisposable
     {
-        IEnumerable<Coaching> GetCoachings();
-        Coaching GetCoachingById(int id);
-        void InsertCoaching(Coaching coaching);
-        void DeleteCoaching(int id);
-        void UpdateCoaching(Coaching coaching);
-        void Save();
+        Task<IEnumerable<Coaching>> GetCoachingsAsync();
+        Task<Coaching> GetCoachingByIdAsync(int id);
+        Task InsertCoachingAsync(Coaching coaching);
+        Task UpdateCoachingAsync(Coaching coaching);
+        Task DeleteCoachingAsync(int id);
+        Task SaveAsync();
     }
 }

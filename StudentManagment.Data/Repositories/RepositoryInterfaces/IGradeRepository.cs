@@ -9,11 +9,11 @@ namespace StudentManagment.Data.Repositories.Interfaces
 {
     public interface IGradeRepository : IDisposable
     {
-        IEnumerable<Grade> GetGrades();
-        Grade GetGradeById(int id);
-        void InsertGrade(Grade grade);
-        void DeleteGrade(int id);
-        void UpdateGrade(Grade grade);
-        void Save();
+        Task<IEnumerable<Grade>> GetGradesAsync();
+        Task<Grade> GetGradeByIdAsync(int id);
+        Task InsertGradeAsync(Grade grade);
+        Task UpdateGradeAsync(Grade grade);
+        Task DeleteGradeAsync(int id);
+        Task SaveAsync();
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace StudentManagment.Data.Repositories.Repositories
 {
-    public class GradeRepository : IGradeRepository, IDisposable
+    public class GradeRepository : IGradeRepository
     {
         private StudentManagmentDbContext _context;
 
@@ -18,46 +18,46 @@ namespace StudentManagment.Data.Repositories.Repositories
             this._context = context;
         }
 
-        public IEnumerable<Grade> GetGrades()
+        public async Task<IEnumerable<Grade>> GetGradesAsync()
         {
-            return _context.Grades.ToList();
+            return await _context.Grades.ToListAsync();
         }
 
-        public Grade GetGradeById(int id)
+        public async Task<Grade> GetGradeByIdAsync(int id)
         {
-            return _context.Grades.Find(id);
+            return await _context.Grades.FindAsync(id);
         }
 
-        public void InsertGrade(Grade grade)
+        public async Task InsertGradeAsync(Grade grade)
         {
-            _context.Grades.Add(grade);
+            await _context.Grades.AddAsync(grade);
         }
 
-        public void UpdateGrade(Grade grade)
+        public async Task UpdateGradeAsync(Grade grade)
         {
             _context.Entry(grade).State = EntityState.Modified;
         }
 
-        public void DeleteGrade(int id)
+        public async Task DeleteGradeAsync(int id)
         {
-            Grade grade = _context.Grades.Find(id);
+            Grade grade = await _context.Grades.FindAsync(id);
             _context.Grades.Remove(grade);
         }
 
-        public void Save()
+        public async Task SaveAsync()
         {
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         private bool disposed = false;
 
-        protected virtual void Dispose(bool disposing)
+        protected virtual async void Dispose(bool disposing)
         {
             if (!this.disposed)
             {
                 if (disposing)
                 {
-                    _context.Dispose();
+                    await _context.DisposeAsync();
                 }
             }
             this.disposed = true;
@@ -69,5 +69,4 @@ namespace StudentManagment.Data.Repositories.Repositories
             GC.SuppressFinalize(this);
         }
     }
-
 }

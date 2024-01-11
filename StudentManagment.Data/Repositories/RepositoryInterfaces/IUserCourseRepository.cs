@@ -9,11 +9,11 @@ namespace StudentManagment.Data.Repositories.Interfaces
 {
     public interface IUserCourseRepository : IDisposable
     {
-        IEnumerable<UserCourse> GetUserCourses();
-        UserCourse GetUserCourseById(int id);
-        void InsertUserCourse(UserCourse userCourse);
-        void DeleteUserCourse(int id);
-        void UpdateUserCourse(UserCourse userCourse);
-        void Save();
+        Task<IEnumerable<UserCourse>> GetUserCoursesAsync();
+        Task<UserCourse> GetUserCourseByIdAsync(int userId, int courseId);
+        Task InsertUserCourseAsync(UserCourse userCourse);
+        Task UpdateUserCourseAsync(UserCourse userCourse);
+        Task DeleteUserCourseAsync(int userId, int courseId);
+        Task SaveAsync();
     }
 }

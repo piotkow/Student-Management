@@ -99,7 +99,6 @@ namespace StudentManagment.Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 
-
             // One-to-Many relationship: User - Attendance
             modelBuilder.Entity<Attendance>()
                 .HasOne<User>(a => a.User)
@@ -156,8 +155,6 @@ namespace StudentManagment.Data
                 }
             );
 
-
-
             modelBuilder.Entity<Course>().HasData(
                 new Course { CourseID = 1, CourseName = "Introduction to Programming", Description = "Learn the basics of programming" },
                 new Course { CourseID = 2, CourseName = "Physics 101", Description = "Introduction to Physics" },
@@ -171,7 +168,6 @@ namespace StudentManagment.Data
                 new UserCourse { UserID = 2, Role = Role.Instructor, CourseID = 3 }
 
             );
-
 
             modelBuilder.Entity<CourseTraining>().HasData(
                 new CourseTraining { CourseID = 1, TrainingID = 1 },
@@ -208,11 +204,7 @@ namespace StudentManagment.Data
                 new Grade { GradeID = 1, UserID = 3, TrainingID = 1, Score = 90, Remarks = "Good performance" },
                 new Grade { GradeID = 2, UserID = 3, TrainingID = 2, Score = 95, Remarks = "Excellent work" }
             );
-
             base.OnModelCreating(modelBuilder);
-
         }
-
-
     }
 }

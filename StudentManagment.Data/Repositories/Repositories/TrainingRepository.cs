@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace StudentManagment.Data.Repositories.Repositories
 {
-    public class TrainingRepository : ITrainingRepository, IDisposable
+    public class TrainingRepository : ITrainingRepository
     {
         private StudentManagmentDbContext _context;
 
@@ -18,46 +18,46 @@ namespace StudentManagment.Data.Repositories.Repositories
             this._context = context;
         }
 
-        public IEnumerable<Training> GetTrainings()
+        public async Task<IEnumerable<Training>> GetTrainingsAsync()
         {
-            return _context.Trainings.ToList();
+            return await _context.Trainings.ToListAsync();
         }
 
-        public Training GetTrainingById(int id)
+        public async Task<Training> GetTrainingByIdAsync(int id)
         {
-            return _context.Trainings.Find(id);
+            return await _context.Trainings.FindAsync(id);
         }
 
-        public void InsertTraining(Training training)
+        public async Task InsertTrainingAsync(Training training)
         {
-            _context.Trainings.Add(training);
+            await _context.Trainings.AddAsync(training);
         }
 
-        public void UpdateTraining(Training training)
+        public async Task UpdateTrainingAsync(Training training)
         {
             _context.Entry(training).State = EntityState.Modified;
         }
 
-        public void DeleteTraining(int id)
+        public async Task DeleteTrainingAsync(int id)
         {
-            Training training = _context.Trainings.Find(id);
+            Training training = await _context.Trainings.FindAsync(id);
             _context.Trainings.Remove(training);
         }
 
-        public void Save()
+        public async Task SaveAsync()
         {
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         private bool disposed = false;
 
-        protected virtual void Dispose(bool disposing)
+        protected virtual async void Dispose(bool disposing)
         {
             if (!this.disposed)
             {
                 if (disposing)
                 {
-                    _context.Dispose();
+                    await _context.DisposeAsync();
                 }
             }
             this.disposed = true;

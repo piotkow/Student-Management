@@ -10,11 +10,11 @@ namespace StudentManagment.Data.Repositories.Interfaces
 {
     public interface IAttendanceRepository : IDisposable
     {
-        IEnumerable<Attendance> GetAttendances();
-        Attendance GetAttendanceById(int id);
-        void InsertAttendance(Attendance attendance);
-        void DeleteAttendance(int id);
-        void UpdateAttendance(Attendance attendance);
-        void Save();
+        Task<IEnumerable<Attendance>> GetAttendancesAsync();
+        Task<Attendance> GetAttendanceByIdAsync(int id);
+        Task InsertAttendanceAsync(Attendance attendance);
+        Task UpdateAttendanceAsync(Attendance attendance);
+        Task DeleteAttendanceAsync(int id);
+        Task SaveAsync();
     }
 }

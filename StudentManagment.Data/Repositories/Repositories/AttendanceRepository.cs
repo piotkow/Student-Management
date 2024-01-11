@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace StudentManagment.Data.Repositories.Repositories
 {
-    public class AttendanceRepository : IAttendanceRepository, IDisposable
+    public class AttendanceRepository : IAttendanceRepository
     {
         private StudentManagmentDbContext _context;
 
@@ -18,46 +18,46 @@ namespace StudentManagment.Data.Repositories.Repositories
             this._context = context;
         }
 
-        public IEnumerable<Attendance> GetAttendances()
+        public async Task<IEnumerable<Attendance>> GetAttendancesAsync()
         {
-            return _context.Attendances.ToList();
+            return await _context.Attendances.ToListAsync();
         }
 
-        public Attendance GetAttendanceById(int id)
+        public async Task<Attendance> GetAttendanceByIdAsync(int id)
         {
-            return _context.Attendances.Find(id);
+            return await _context.Attendances.FindAsync(id);
         }
 
-        public void InsertAttendance(Attendance attendance)
+        public async Task InsertAttendanceAsync(Attendance attendance)
         {
-            _context.Attendances.Add(attendance);
+            await _context.Attendances.AddAsync(attendance);
         }
 
-        public void UpdateAttendance(Attendance attendance)
+        public async Task UpdateAttendanceAsync(Attendance attendance)
         {
             _context.Entry(attendance).State = EntityState.Modified;
         }
 
-        public void DeleteAttendance(int id)
+        public async Task DeleteAttendanceAsync(int id)
         {
-            Attendance attendance = _context.Attendances.Find(id);
+            Attendance attendance = await _context.Attendances.FindAsync(id);
             _context.Attendances.Remove(attendance);
         }
 
-        public void Save()
+        public async Task SaveAsync()
         {
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         private bool disposed = false;
 
-        protected virtual void Dispose(bool disposing)
+        protected virtual async void Dispose(bool disposing)
         {
             if (!this.disposed)
             {
                 if (disposing)
                 {
-                    _context.Dispose();
+                    await _context.DisposeAsync();
                 }
             }
             this.disposed = true;
@@ -68,6 +68,6 @@ namespace StudentManagment.Data.Repositories.Repositories
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-
     }
+
 }

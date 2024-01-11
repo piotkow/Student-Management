@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace StudentManagment.Data.Repositories.Repositories
 {
-    public class CourseTrainingRepository : ICourseTrainingRepository, IDisposable
+    public class CourseTrainingRepository : ICourseTrainingRepository
     {
         private StudentManagmentDbContext _context;
 
@@ -18,46 +18,48 @@ namespace StudentManagment.Data.Repositories.Repositories
             this._context = context;
         }
 
-        public IEnumerable<CourseTraining> GetCourseTrainings()
+        public async Task<IEnumerable<CourseTraining>> GetCourseTrainingsAsync()
         {
-            return _context.CourseTrainings.ToList();
+            return await _context.CourseTrainings.ToListAsync();
         }
 
-        public CourseTraining GetCourseTrainingById(int id)
+        public async Task<CourseTraining> GetCourseTrainingByIdAsync(int courseId, int trainingId)
         {
-            return _context.CourseTrainings.Find(id);
+            return await _context.CourseTrainings
+                .FirstOrDefaultAsync(ct => ct.CourseID == courseId && ct.TrainingID == trainingId);
         }
 
-        public void InsertCourseTraining(CourseTraining courseTraining)
+        public async Task InsertCourseTrainingAsync(CourseTraining courseTraining)
         {
-            _context.CourseTrainings.Add(courseTraining);
+            await _context.CourseTrainings.AddAsync(courseTraining);
         }
 
-        public void UpdateCourseTraining(CourseTraining courseTraining)
+        public async Task UpdateCourseTrainingAsync(CourseTraining courseTraining)
         {
             _context.Entry(courseTraining).State = EntityState.Modified;
         }
 
-        public void DeleteCourseTraining(int id)
+        public async Task DeleteCourseTrainingAsync(int courseId, int trainingId)
         {
-            CourseTraining courseTraining = _context.CourseTrainings.Find(id);
+            CourseTraining courseTraining = await _context.CourseTrainings
+                .FirstOrDefaultAsync(ct => ct.CourseID == courseId && ct.TrainingID == trainingId);
             _context.CourseTrainings.Remove(courseTraining);
         }
 
-        public void Save()
+        public async Task SaveAsync()
         {
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         private bool disposed = false;
 
-        protected virtual void Dispose(bool disposing)
+        protected virtual async void Dispose(bool disposing)
         {
             if (!this.disposed)
             {
                 if (disposing)
                 {
-                    _context.Dispose();
+                    await _context.DisposeAsync();
                 }
             }
             this.disposed = true;

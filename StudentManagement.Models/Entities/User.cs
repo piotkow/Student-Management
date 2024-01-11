@@ -15,7 +15,6 @@ namespace StudentManagement.Models.Entities
         Student
     };
 
-
     [Table("Users")]
     public class User
     {
@@ -59,6 +58,4 @@ namespace StudentManagement.Models.Entities
 
         public virtual ICollection<Grade> Grades { get; set; }
     }
-
-
 }

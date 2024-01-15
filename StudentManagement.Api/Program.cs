@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StudentManagement.Services.Interfaces;
+using StudentManagement.Services.MappingProfile;
 using StudentManagement.Services.Services;
 using StudentManagment.Data;
 using StudentManagment.Data.UnitOfWork;
@@ -13,9 +14,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<StudentManagmentDbContext>(option =>
     option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+var mapperConfig = new MapperConfiguration(mc =>
+{
+    mc.AddProfile(new MappingProfile());
+});
 
-//IMapper mapper = mapperConfig.CreateMapper();
-//builder.Services.AddSingleton(mapper);
+IMapper mapper = mapperConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAttendanceService, AttendanceService>();

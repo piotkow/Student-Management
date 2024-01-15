@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using StudentManagement.Models.Entities;
+using StudentManagement.Services.Interfaces;
 using StudentManagment.Data.Repositories.Interfaces;
+using StudentManagment.Data.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,40 +11,44 @@ using System.Threading.Tasks;
 
 namespace StudentManagement.Services.Services
 {
-    public class CourseService
+    public class CourseService : ICourseService
     {
-        private readonly ICourseRepository _courseRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CourseService(ICourseRepository courseRepository, IMapper mapper)
+        public CourseService(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _courseRepository = courseRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
         public async Task<IEnumerable<Course>> GetCoursesAsync()
         {
-            return await _courseRepository.GetCoursesAsync();
+            return await _unitOfWork.CourseRepository.GetCoursesAsync();
         }
 
         public async Task<Course> GetCourseByIdAsync(int courseId)
         {
-            return await _courseRepository.GetCourseByIdAsync(courseId);
+            return await _unitOfWork.CourseRepository.GetCourseByIdAsync(courseId);
         }
 
         public async Task InsertCourseAsync(Course course)
         {
-            await _courseRepository.InsertCourseAsync(course);
+            await _unitOfWork.CourseRepository.InsertCourseAsync(course);
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task DeleteCourseAsync(int courseId)
         {
-            await _courseRepository.DeleteCourseAsync(courseId);
+            await _unitOfWork.CourseRepository.DeleteCourseAsync(courseId);
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task UpdateCourseAsync(Course course)
-        { 
-            await _courseRepository.UpdateCourseAsync(course);
+        {
+            await _unitOfWork.CourseRepository.UpdateCourseAsync(course);
+            await _unitOfWork.SaveAsync();
         }
     }
+
 }

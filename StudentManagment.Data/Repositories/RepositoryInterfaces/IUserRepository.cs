@@ -11,6 +11,7 @@ namespace StudentManagment.Data.Repositories.Interfaces
     {
         Task<IEnumerable<User>> GetUsersAsync();
         Task<User> GetUserByIdAsync(int id);
+        Task<User> GetUserByNameAsync(string name);
         Task InsertUserAsync(User user);
         Task UpdateUserAsync(User user);
         Task DeleteUserAsync(int id);

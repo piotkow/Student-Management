@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using StudentManagement.Models.Entities;
+using StudentManagement.Services.DTOs.User;
 using StudentManagement.Services.Interfaces;
 using StudentManagment.Data.Repositories.Interfaces;
 using StudentManagment.Data.UnitOfWork;
@@ -46,7 +47,31 @@ namespace StudentManagement.Services.Services
             await _unitOfWork.UserRepository.UpdateUserAsync(user);
             await _unitOfWork.SaveAsync();
         }
-    }
 
+        public async Task<User> AuthenticateUser(UserLoginRequest user)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.Password))
+                {
+                    return null;
+                }
+
+                var existingUser = await _unitOfWork.UserRepository.GetUserByNameAsync(user.Username);
+
+                if (existingUser != null && user.Password == existingUser.Password)
+                {
+                    return existingUser;
+                }
+
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+    }
 }
 

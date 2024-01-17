@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using StudentManagement.Services.DTOs.User;
@@ -6,6 +7,8 @@ using StudentManagement.Services.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.Extensions.Logging;
+
 
 namespace StudentManagement.Api.Controllers
 {
@@ -13,41 +16,46 @@ namespace StudentManagement.Api.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
+        private readonly ITokenService _tokenService;
         private readonly IUserService _userService;
+        private readonly ILogger<LoginController> _logger;
 
-        public LoginController (IUserService userService)
+        public LoginController(ITokenService tokenService, IUserService userService, ILogger<LoginController> logger)
         {
+            _tokenService = tokenService;
             _userService = userService;
+            _logger = logger;
         }
 
-        [HttpPost, Route("login")]
-        public IActionResult Login(UserLoginRequest user)
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("login")]
+        public async Task<IActionResult> Login([FromBody] UserLoginRequest userLoginRequest)
         {
             try
             {
-                if (string.IsNullOrEmpty(user.Username) ||
-                string.IsNullOrEmpty(user.Password))
-                    return BadRequest("Username and/or Password not specified");
-                if (_userService.AuthenticateUser(user) != null)
+                // Validate user credentials
+                var user = await _userService.AuthenticateUser(userLoginRequest);
+
+                if (user == null)
                 {
-                    var secretKey = new SymmetricSecurityKey
-                    (Encoding.UTF8.GetBytes("tokenKey"));
-                    var signinCredentials = new SigningCredentials
-                    (secretKey, SecurityAlgorithms.HmacSha256);
-                    var jwtSecurityToken = new JwtSecurityToken(
-                        issuer: "ABCXYZ",
-                        audience: "http://localhost:44372",
-                        claims: new List<Claim>(),
-                        expires: DateTime.Now.AddMinutes(10),
-                        signingCredentials: signinCredentials
-                    );
-                    return Ok(new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken));
+                    return Unauthorized(new { Message = "Invalid username or password." });
                 }
+
+                // Generate a JWT token
+                var token = _tokenService.GenerateToken(user);
+
+                return Ok(new { Token = token });
             }
-            catch
+            catch (Exception ex)
             {
+                // Log the exception
+                _logger.LogError(ex, "An error occurred during login.");
+
+                // Return a more detailed error message if needed
+                return StatusCode(500, new { Message = "An error occurred during login. See logs for details." });
             }
-            return Unauthorized();
+
         }
     }
 }

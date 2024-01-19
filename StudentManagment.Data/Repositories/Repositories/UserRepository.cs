@@ -30,7 +30,8 @@ namespace StudentManagment.Data.Repositories.Repositories
 
         public async Task<User> GetUserByNameAsync(string name)
         {
-            return await _context.Users.FirstAsync(u=>u.Username == name);
+            var user= await _context.Users.FirstOrDefaultAsync(u => u.Username == name);
+            return user;
         }
 
         public async Task InsertUserAsync(User user)

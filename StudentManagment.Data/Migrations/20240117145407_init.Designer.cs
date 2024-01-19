@@ -12,7 +12,7 @@ using StudentManagment.Data;
 namespace StudentManagment.Data.Migrations
 {
     [DbContext(typeof(StudentManagmentDbContext))]
-    [Migration("20240109081936_init")]
+    [Migration("20240117145407_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -57,7 +57,7 @@ namespace StudentManagment.Data.Migrations
                         new
                         {
                             AttendanceID = 1,
-                            Date = new DateTime(2024, 2, 9, 9, 19, 36, 574, DateTimeKind.Local).AddTicks(3606),
+                            Date = new DateTime(2024, 2, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3185),
                             Present = true,
                             TrainingID = 1,
                             UserID = 3
@@ -65,7 +65,7 @@ namespace StudentManagment.Data.Migrations
                         new
                         {
                             AttendanceID = 2,
-                            Date = new DateTime(2024, 3, 9, 9, 19, 36, 574, DateTimeKind.Local).AddTicks(3608),
+                            Date = new DateTime(2024, 3, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3189),
                             Present = false,
                             TrainingID = 2,
                             UserID = 3
@@ -107,19 +107,19 @@ namespace StudentManagment.Data.Migrations
                         new
                         {
                             CoachingID = 1,
-                            EndDate = new DateTime(2024, 3, 9, 9, 19, 36, 574, DateTimeKind.Local).AddTicks(3550),
+                            EndDate = new DateTime(2024, 3, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3156),
                             Feedback = "Good performance",
                             Location = "Room X",
-                            StartDate = new DateTime(2024, 2, 9, 9, 19, 36, 574, DateTimeKind.Local).AddTicks(3549),
+                            StartDate = new DateTime(2024, 2, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3155),
                             Topic = "Advanced Programming"
                         },
                         new
                         {
                             CoachingID = 2,
-                            EndDate = new DateTime(2024, 4, 9, 9, 19, 36, 574, DateTimeKind.Local).AddTicks(3553),
+                            EndDate = new DateTime(2024, 4, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3163),
                             Feedback = "Excellent participation",
                             Location = "Room Y",
-                            StartDate = new DateTime(2024, 3, 9, 9, 19, 36, 574, DateTimeKind.Local).AddTicks(3552),
+                            StartDate = new DateTime(2024, 3, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3161),
                             Topic = "Advanced Physics"
                         });
                 });
@@ -276,25 +276,25 @@ namespace StudentManagment.Data.Migrations
                         new
                         {
                             TrainingID = 1,
-                            EndDate = new DateTime(2024, 3, 9, 9, 19, 36, 574, DateTimeKind.Local).AddTicks(3534),
+                            EndDate = new DateTime(2024, 3, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3131),
                             Location = "Room A",
-                            StartDate = new DateTime(2024, 2, 9, 9, 19, 36, 574, DateTimeKind.Local).AddTicks(3491),
+                            StartDate = new DateTime(2024, 2, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3090),
                             Topic = "Programming Basics"
                         },
                         new
                         {
                             TrainingID = 2,
-                            EndDate = new DateTime(2024, 4, 9, 9, 19, 36, 574, DateTimeKind.Local).AddTicks(3538),
+                            EndDate = new DateTime(2024, 4, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3138),
                             Location = "Room B",
-                            StartDate = new DateTime(2024, 3, 9, 9, 19, 36, 574, DateTimeKind.Local).AddTicks(3537),
+                            StartDate = new DateTime(2024, 3, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3137),
                             Topic = "Physics Fundamentals"
                         },
                         new
                         {
                             TrainingID = 3,
-                            EndDate = new DateTime(2024, 3, 9, 9, 19, 36, 574, DateTimeKind.Local).AddTicks(3541),
+                            EndDate = new DateTime(2024, 3, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3142),
                             Location = "Room C",
-                            StartDate = new DateTime(2024, 2, 9, 9, 19, 36, 574, DateTimeKind.Local).AddTicks(3540),
+                            StartDate = new DateTime(2024, 2, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3141),
                             Topic = "Math Basics"
                         });
                 });

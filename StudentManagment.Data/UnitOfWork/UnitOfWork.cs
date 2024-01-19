@@ -20,6 +20,7 @@ namespace StudentManagment.Data.UnitOfWork
             context = dbContext;
             AttendanceRepository = new AttendanceRepository(context);
             CoachingRepository = new CoachingRepository(context);
+            CourseRepository = new CourseRepository(context);
             CourseTrainingRepository = new CourseTrainingRepository(context);
             GradeRepository = new GradeRepository(context);
             TrainingRepository = new TrainingRepository(context);

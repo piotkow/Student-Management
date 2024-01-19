@@ -28,6 +28,12 @@ namespace StudentManagment.Data.Repositories.Repositories
             return await _context.Users.FindAsync(id);
         }
 
+        public async Task<User> GetUserByNameAsync(string name)
+        {
+            var user= await _context.Users.FirstOrDefaultAsync(u => u.Username == name);
+            return user;
+        }
+
         public async Task InsertUserAsync(User user)
         {
             await _context.Users.AddAsync(user);

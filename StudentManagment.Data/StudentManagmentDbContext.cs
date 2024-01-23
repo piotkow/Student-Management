@@ -127,7 +127,8 @@ namespace StudentManagment.Data
                     FirstName = "Admin",
                     LastName = "Admin",
                     DateOfBirth = new DateTime(1990, 1, 1),
-                    Phone = "123-456-789"
+                    Phone = "123-456-789",
+                    Avatar= "https://images.unsplash.com/photo-1593085512500-5d55148d6f0d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDExfHx8ZW58MHx8fHx8"
                 },
                 new User
                 {
@@ -139,7 +140,8 @@ namespace StudentManagment.Data
                     FirstName = "Instructor",
                     LastName = "Instructor",
                     DateOfBirth = new DateTime(1980, 1, 1),
-                    Phone = "987-654-321"
+                    Phone = "987-654-321",
+                    Avatar= "https://images.unsplash.com/photo-1610981755415-3f7c9202cccb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEzfHx8ZW58MHx8fHx8"
                 },
                 new User
                 {
@@ -151,7 +153,8 @@ namespace StudentManagment.Data
                     FirstName = "Student",
                     LastName = "Student",
                     DateOfBirth = new DateTime(2000, 1, 1),
-                    Phone = "555-123-456"
+                    Phone = "555-123-456",
+                    Avatar= "https://images.unsplash.com/photo-1638803040283-7a5ffd48dad5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDl8fHxlbnwwfHx8fHw%3D"
                 }
             );
 

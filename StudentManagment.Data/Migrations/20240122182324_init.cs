@@ -73,6 +73,7 @@ namespace StudentManagment.Data.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", maxLength: 20, nullable: false),
+                    Avatar = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -215,8 +216,8 @@ namespace StudentManagment.Data.Migrations
                 columns: new[] { "CoachingID", "EndDate", "Feedback", "Location", "StartDate", "Topic" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 3, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3156), "Good performance", "Room X", new DateTime(2024, 2, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3155), "Advanced Programming" },
-                    { 2, new DateTime(2024, 4, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3163), "Excellent participation", "Room Y", new DateTime(2024, 3, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3161), "Advanced Physics" }
+                    { 1, new DateTime(2024, 3, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8313), "Good performance", "Room X", new DateTime(2024, 2, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8312), "Advanced Programming" },
+                    { 2, new DateTime(2024, 4, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8316), "Excellent participation", "Room Y", new DateTime(2024, 3, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8315), "Advanced Physics" }
                 });
 
             migrationBuilder.InsertData(
@@ -234,19 +235,19 @@ namespace StudentManagment.Data.Migrations
                 columns: new[] { "TrainingID", "EndDate", "Location", "StartDate", "Topic" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 3, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3131), "Room A", new DateTime(2024, 2, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3090), "Programming Basics" },
-                    { 2, new DateTime(2024, 4, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3138), "Room B", new DateTime(2024, 3, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3137), "Physics Fundamentals" },
-                    { 3, new DateTime(2024, 3, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3142), "Room C", new DateTime(2024, 2, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3141), "Math Basics" }
+                    { 1, new DateTime(2024, 3, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8293), "Room A", new DateTime(2024, 2, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8252), "Programming Basics" },
+                    { 2, new DateTime(2024, 4, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8297), "Room B", new DateTime(2024, 3, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8296), "Physics Fundamentals" },
+                    { 3, new DateTime(2024, 3, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8300), "Room C", new DateTime(2024, 2, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8299), "Math Basics" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "UserID", "DateOfBirth", "Email", "FirstName", "LastName", "Password", "Phone", "Role", "Username" },
+                columns: new[] { "UserID", "Avatar", "DateOfBirth", "Email", "FirstName", "LastName", "Password", "Phone", "Role", "Username" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@example.com", "Admin", "Admin", "Admin123", "123-456-789", 0, "AdminUser" },
-                    { 2, new DateTime(1980, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "instructor@example.com", "Instructor", "Instructor", "Instructor123", "987-654-321", 1, "InstructorUser" },
-                    { 3, new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "student@example.com", "Student", "Student", "Student123", "555-123-456", 2, "StudentUser" }
+                    { 1, "https://images.unsplash.com/photo-1593085512500-5d55148d6f0d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDExfHx8ZW58MHx8fHx8", new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@example.com", "Admin", "Admin", "Admin123", "123-456-789", 0, "AdminUser" },
+                    { 2, "https://images.unsplash.com/photo-1610981755415-3f7c9202cccb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEzfHx8ZW58MHx8fHx8", new DateTime(1980, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "instructor@example.com", "Instructor", "Instructor", "Instructor123", "987-654-321", 1, "InstructorUser" },
+                    { 3, "https://images.unsplash.com/photo-1638803040283-7a5ffd48dad5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDl8fHxlbnwwfHx8fHw%3D", new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "student@example.com", "Student", "Student", "Student123", "555-123-456", 2, "StudentUser" }
                 });
 
             migrationBuilder.InsertData(
@@ -254,8 +255,8 @@ namespace StudentManagment.Data.Migrations
                 columns: new[] { "AttendanceID", "Date", "Present", "TrainingID", "UserID" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 2, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3185), true, 1, 3 },
-                    { 2, new DateTime(2024, 3, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3189), false, 2, 3 }
+                    { 1, new DateTime(2024, 2, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8334), true, 1, 3 },
+                    { 2, new DateTime(2024, 3, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8336), false, 2, 3 }
                 });
 
             migrationBuilder.InsertData(

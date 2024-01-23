@@ -54,7 +54,7 @@ namespace StudentManagment.Data.Migrations
                         new
                         {
                             AttendanceID = 1,
-                            Date = new DateTime(2024, 2, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3185),
+                            Date = new DateTime(2024, 2, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8334),
                             Present = true,
                             TrainingID = 1,
                             UserID = 3
@@ -62,7 +62,7 @@ namespace StudentManagment.Data.Migrations
                         new
                         {
                             AttendanceID = 2,
-                            Date = new DateTime(2024, 3, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3189),
+                            Date = new DateTime(2024, 3, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8336),
                             Present = false,
                             TrainingID = 2,
                             UserID = 3
@@ -104,19 +104,19 @@ namespace StudentManagment.Data.Migrations
                         new
                         {
                             CoachingID = 1,
-                            EndDate = new DateTime(2024, 3, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3156),
+                            EndDate = new DateTime(2024, 3, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8313),
                             Feedback = "Good performance",
                             Location = "Room X",
-                            StartDate = new DateTime(2024, 2, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3155),
+                            StartDate = new DateTime(2024, 2, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8312),
                             Topic = "Advanced Programming"
                         },
                         new
                         {
                             CoachingID = 2,
-                            EndDate = new DateTime(2024, 4, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3163),
+                            EndDate = new DateTime(2024, 4, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8316),
                             Feedback = "Excellent participation",
                             Location = "Room Y",
-                            StartDate = new DateTime(2024, 3, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3161),
+                            StartDate = new DateTime(2024, 3, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8315),
                             Topic = "Advanced Physics"
                         });
                 });
@@ -273,25 +273,25 @@ namespace StudentManagment.Data.Migrations
                         new
                         {
                             TrainingID = 1,
-                            EndDate = new DateTime(2024, 3, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3131),
+                            EndDate = new DateTime(2024, 3, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8293),
                             Location = "Room A",
-                            StartDate = new DateTime(2024, 2, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3090),
+                            StartDate = new DateTime(2024, 2, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8252),
                             Topic = "Programming Basics"
                         },
                         new
                         {
                             TrainingID = 2,
-                            EndDate = new DateTime(2024, 4, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3138),
+                            EndDate = new DateTime(2024, 4, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8297),
                             Location = "Room B",
-                            StartDate = new DateTime(2024, 3, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3137),
+                            StartDate = new DateTime(2024, 3, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8296),
                             Topic = "Physics Fundamentals"
                         },
                         new
                         {
                             TrainingID = 3,
-                            EndDate = new DateTime(2024, 3, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3142),
+                            EndDate = new DateTime(2024, 3, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8300),
                             Location = "Room C",
-                            StartDate = new DateTime(2024, 2, 17, 15, 54, 7, 844, DateTimeKind.Local).AddTicks(3141),
+                            StartDate = new DateTime(2024, 2, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8299),
                             Topic = "Math Basics"
                         });
                 });
@@ -303,6 +303,10 @@ namespace StudentManagment.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserID"));
+
+                    b.Property<string>("Avatar")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasMaxLength(20)
@@ -348,6 +352,7 @@ namespace StudentManagment.Data.Migrations
                         new
                         {
                             UserID = 1,
+                            Avatar = "https://images.unsplash.com/photo-1593085512500-5d55148d6f0d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDExfHx8ZW58MHx8fHx8",
                             DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@example.com",
                             FirstName = "Admin",
@@ -360,6 +365,7 @@ namespace StudentManagment.Data.Migrations
                         new
                         {
                             UserID = 2,
+                            Avatar = "https://images.unsplash.com/photo-1610981755415-3f7c9202cccb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEzfHx8ZW58MHx8fHx8",
                             DateOfBirth = new DateTime(1980, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "instructor@example.com",
                             FirstName = "Instructor",
@@ -372,6 +378,7 @@ namespace StudentManagment.Data.Migrations
                         new
                         {
                             UserID = 3,
+                            Avatar = "https://images.unsplash.com/photo-1638803040283-7a5ffd48dad5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDl8fHxlbnwwfHx8fHw%3D",
                             DateOfBirth = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "student@example.com",
                             FirstName = "Student",

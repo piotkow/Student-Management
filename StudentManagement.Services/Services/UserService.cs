@@ -30,10 +30,13 @@ namespace StudentManagement.Services.Services
             return await _unitOfWork.UserRepository.GetUserByIdAsync(userId);
         }
 
-        public async Task InsertUserAsync(User user)
+        public async Task InsertUserAsync(UserRequest userReq)
         {
+            await _unitOfWork.BeginTransactionAsync();
+            var user = _mapper.Map<User>(userReq);
+            user.UserID=GenerateNewUserId();
             await _unitOfWork.UserRepository.InsertUserAsync(user);
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.CommitAsync();
         }
 
         public async Task DeleteUserAsync(int userId)
@@ -70,6 +73,11 @@ namespace StudentManagement.Services.Services
             {
                 return null;
             }
+        }
+
+        private int GenerateNewUserId()
+        {
+            return _unitOfWork.UserRepository.GetUsersAsync().Result.Max(x => x.UserID)+1;
         }
 
     }

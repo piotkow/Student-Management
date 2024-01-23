@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudentManagement.Models.Entities;
+using StudentManagement.Services.DTOs.User;
 using StudentManagement.Services.Interfaces;
 using StudentManagment.Data;
 
@@ -61,11 +62,11 @@ namespace StudentManagement.Api.Controllers
 
         // POST: api/Users
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<UserRequest>> PostUser(UserRequest userReq)
         {
-            await _userService.InsertUserAsync(user);
+            await _userService.InsertUserAsync(userReq);
 
-            return CreatedAtAction("GetUser", new { id = user.UserID }, user);
+            return NoContent();
         }
 
         // DELETE: api/Users/5

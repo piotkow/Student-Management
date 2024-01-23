@@ -50,6 +50,9 @@ namespace StudentManagement.Models.Entities
         [StringLength(20)]
         public DateTime DateOfBirth { get; set; }
 
+        [Required]
+        public string Avatar {  get; set; }
+
         public string Phone { get; set; }
         public virtual ICollection<UserCourse> UserCourses { get; set; }
         public virtual ICollection<UserCoaching> UserCoachings { get; set; }

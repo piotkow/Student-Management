@@ -46,10 +46,21 @@ namespace StudentManagement.Services.Services
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task UpdateUserAsync(User user)
+        public async Task UpdateUserAsync(int userId, UserRequest userReq)
         {
+            await _unitOfWork.BeginTransactionAsync();
+            var user = await _unitOfWork.UserRepository.GetUserByIdAsync(userId);
+            user.Username = userReq.Username;
+            user.Password = userReq.Password;
+            user.Role = userReq.Role;
+            user.Email = userReq.Email;
+            user.FirstName = userReq.FirstName;
+            user.LastName = userReq.LastName;
+            user.DateOfBirth= userReq.DateOfBirth;
+            user.Avatar=userReq.Avatar;
+            user.Phone = userReq.Phone;
             await _unitOfWork.UserRepository.UpdateUserAsync(user);
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.CommitAsync();
         }
 
         public async Task<User> AuthenticateUser(UserLoginRequest user)

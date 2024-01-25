@@ -72,7 +72,7 @@ namespace StudentManagment.Data.Migrations
                     Email = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    DateOfBirth = table.Column<DateTime>(type: "datetime2", maxLength: 20, nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Avatar = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -216,8 +216,8 @@ namespace StudentManagment.Data.Migrations
                 columns: new[] { "CoachingID", "EndDate", "Feedback", "Location", "StartDate", "Topic" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 3, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8313), "Good performance", "Room X", new DateTime(2024, 2, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8312), "Advanced Programming" },
-                    { 2, new DateTime(2024, 4, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8316), "Excellent participation", "Room Y", new DateTime(2024, 3, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8315), "Advanced Physics" }
+                    { 1, new DateTime(2024, 3, 25, 10, 18, 42, 844, DateTimeKind.Local).AddTicks(5729), "Good performance", "Room X", new DateTime(2024, 2, 25, 10, 18, 42, 844, DateTimeKind.Local).AddTicks(5727), "Advanced Programming" },
+                    { 2, new DateTime(2024, 4, 25, 10, 18, 42, 844, DateTimeKind.Local).AddTicks(5732), "Excellent participation", "Room Y", new DateTime(2024, 3, 25, 10, 18, 42, 844, DateTimeKind.Local).AddTicks(5731), "Advanced Physics" }
                 });
 
             migrationBuilder.InsertData(
@@ -235,9 +235,9 @@ namespace StudentManagment.Data.Migrations
                 columns: new[] { "TrainingID", "EndDate", "Location", "StartDate", "Topic" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 3, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8293), "Room A", new DateTime(2024, 2, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8252), "Programming Basics" },
-                    { 2, new DateTime(2024, 4, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8297), "Room B", new DateTime(2024, 3, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8296), "Physics Fundamentals" },
-                    { 3, new DateTime(2024, 3, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8300), "Room C", new DateTime(2024, 2, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8299), "Math Basics" }
+                    { 1, new DateTime(2024, 3, 25, 10, 18, 42, 844, DateTimeKind.Local).AddTicks(5709), "Room A", new DateTime(2024, 2, 25, 10, 18, 42, 844, DateTimeKind.Local).AddTicks(5662), "Programming Basics" },
+                    { 2, new DateTime(2024, 4, 25, 10, 18, 42, 844, DateTimeKind.Local).AddTicks(5713), "Room B", new DateTime(2024, 3, 25, 10, 18, 42, 844, DateTimeKind.Local).AddTicks(5712), "Physics Fundamentals" },
+                    { 3, new DateTime(2024, 3, 25, 10, 18, 42, 844, DateTimeKind.Local).AddTicks(5717), "Room C", new DateTime(2024, 2, 25, 10, 18, 42, 844, DateTimeKind.Local).AddTicks(5715), "Math Basics" }
                 });
 
             migrationBuilder.InsertData(
@@ -255,8 +255,8 @@ namespace StudentManagment.Data.Migrations
                 columns: new[] { "AttendanceID", "Date", "Present", "TrainingID", "UserID" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 2, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8334), true, 1, 3 },
-                    { 2, new DateTime(2024, 3, 22, 19, 23, 24, 317, DateTimeKind.Local).AddTicks(8336), false, 2, 3 }
+                    { 1, new DateTime(2024, 2, 25, 10, 18, 42, 844, DateTimeKind.Local).AddTicks(5751), true, 1, 3 },
+                    { 2, new DateTime(2024, 3, 25, 10, 18, 42, 844, DateTimeKind.Local).AddTicks(5753), false, 2, 3 }
                 });
 
             migrationBuilder.InsertData(

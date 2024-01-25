@@ -47,7 +47,6 @@ namespace StudentManagement.Models.Entities
         public string LastName { get; set; }
 
         [Required]
-        [StringLength(20)]
         public DateTime DateOfBirth { get; set; }
 
         [Required]

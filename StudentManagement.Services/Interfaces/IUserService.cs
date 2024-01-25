@@ -9,7 +9,7 @@ namespace StudentManagement.Services.Interfaces
     {
         Task<IEnumerable<User>> GetUsersAsync();
         Task<User> GetUserByIdAsync(int userId);
-        Task InsertUserAsync(User user);
+        Task<User> InsertUserAsync(UserRequest userReq);
         Task DeleteUserAsync(int userId);
         Task UpdateUserAsync(User user);
         Task<User> AuthenticateUser(UserLoginRequest user);

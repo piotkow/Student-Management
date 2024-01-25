@@ -24,15 +24,32 @@ namespace StudentManagement.Api.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] UserLoginRequest req)
-        {
-            if (await _userService.AuthenticateUser(req) != null)
+        { 
+            User authenticatedUser = await _userService.AuthenticateUser(req);
+            
+            if (authenticatedUser != null)
+            {
+                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("7e7355946837449c83f32d53cbe8f74849a36589b8b83b2e6f6a28c5e72e4e7d"));
+                var credentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+
+                var claims = new List<Claim>
                 {
-                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("7e7355946837449c83f32d53cbe8f74849a36589b8b83b2e6f6a28c5e72e4e7d"));
-                 var credentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-                 var tokenOptions = new JwtSecurityToken(
+                    new Claim(ClaimTypes.NameIdentifier, authenticatedUser.UserID.ToString()),
+                    new Claim(ClaimTypes.Name, authenticatedUser.Username), // Add username as a claim
+                    new Claim("userID", authenticatedUser.UserID.ToString()),
+                    new Claim("role", authenticatedUser.Role.ToString()), // Assuming Role is an enum
+                    new Claim("email", authenticatedUser.Email),
+                    new Claim("firstName", authenticatedUser.FirstName),
+                    new Claim("lastName", authenticatedUser.LastName),
+                    new Claim("dateOfBirth", authenticatedUser.DateOfBirth.ToString("yyyy-MM-dd")), // Adjust the date format as needed
+                    new Claim("avatar", authenticatedUser.Avatar),
+                    new Claim("phone", authenticatedUser.Phone),
+                };
+
+                var tokenOptions = new JwtSecurityToken(
                      issuer: "http://localhost:5249",
                      audience: "http://localhost:4200",
-                     claims: new List<Claim>(),
+                     claims: claims,
                      expires: DateTime.Now.AddMinutes(5),
                      signingCredentials: credentials
                      );

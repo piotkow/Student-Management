@@ -11,7 +11,7 @@ namespace StudentManagement.Services.Interfaces
         Task<User> GetUserByIdAsync(int userId);
         Task<User> InsertUserAsync(UserRequest userReq);
         Task DeleteUserAsync(int userId);
-        Task UpdateUserAsync(User user);
+        Task UpdateUserAsync(int userId, UserRequest userReq);
         Task<User> AuthenticateUser(UserLoginRequest user);
     }
 }

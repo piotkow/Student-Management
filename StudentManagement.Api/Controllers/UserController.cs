@@ -48,16 +48,11 @@ namespace StudentManagement.Api.Controllers
 
         // PUT: api/Users/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> PutUser(int id, UserRequest userReq)
         {
-            if (id != user.UserID)
-            {
-                return BadRequest();
-            }
+            await _userService.UpdateUserAsync(id, userReq);
 
-            await _userService.UpdateUserAsync(user);
-
-            return NoContent();
+            return Ok(userReq);
         }
 
         // POST: api/Users
@@ -75,7 +70,7 @@ namespace StudentManagement.Api.Controllers
         {
             await _userService.DeleteUserAsync(id);
 
-            return NoContent();
+            return Ok();
         }
     }
 }

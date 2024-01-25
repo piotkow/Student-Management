@@ -52,7 +52,7 @@ namespace StudentManagement.Api.Controllers
         {
             await _userService.UpdateUserAsync(id, userReq);
 
-            return NoContent();
+            return Ok(userReq);
         }
 
         // POST: api/Users
@@ -70,7 +70,7 @@ namespace StudentManagement.Api.Controllers
         {
             await _userService.DeleteUserAsync(id);
 
-            return NoContent();
+            return Ok();
         }
     }
 }

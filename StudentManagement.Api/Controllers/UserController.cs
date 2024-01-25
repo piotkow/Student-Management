@@ -62,11 +62,11 @@ namespace StudentManagement.Api.Controllers
 
         // POST: api/Users
         [HttpPost]
-        public async Task<ActionResult<UserRequest>> PostUser(UserRequest userReq)
+        public async Task<ActionResult<UserRequest>> PostUser([FromBody] UserRequest userReq)
         {
-            await _userService.InsertUserAsync(userReq);
+            var insertedUser = await _userService.InsertUserAsync(userReq);
 
-            return NoContent();
+            return CreatedAtAction(nameof(GetUser), new { id = insertedUser.UserID }, insertedUser);
         }
 
         // DELETE: api/Users/5

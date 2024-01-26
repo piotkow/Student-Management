@@ -7,4 +7,5 @@ using System.Threading.Tasks;
 namespace StudentManagement.Services.DTOs.User
 {
     public record LoginResponse (string Token);
+
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using StudentManagement.Models.Entities;
+using StudentManagement.Services.DTOs.Course;
 using StudentManagement.Services.Interfaces;
 using StudentManagment.Data.Repositories.Interfaces;
 using StudentManagment.Data.UnitOfWork;
@@ -32,10 +33,13 @@ namespace StudentManagement.Services.Services
             return await _unitOfWork.CourseRepository.GetCourseByIdAsync(courseId);
         }
 
-        public async Task InsertCourseAsync(Course course)
+        public async Task<Course> InsertCourseAsync(CourseRequest courseReq)
         {
+            await _unitOfWork.BeginTransactionAsync();
+            var course = _mapper.Map<Course>(courseReq);
             await _unitOfWork.CourseRepository.InsertCourseAsync(course);
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.CommitAsync();
+            return course;
         }
 
         public async Task DeleteCourseAsync(int courseId)
@@ -44,10 +48,14 @@ namespace StudentManagement.Services.Services
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task UpdateCourseAsync(Course course)
+        public async Task UpdateCourseAsync(int courseId, CourseRequest courseReq)
         {
+            await _unitOfWork.BeginTransactionAsync();
+            var course = await _unitOfWork.CourseRepository.GetCourseByIdAsync(courseId);
+            course.CourseName = courseReq.CourseName;
+            course.Description = courseReq.Description;
             await _unitOfWork.CourseRepository.UpdateCourseAsync(course);
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.CommitAsync();
         }
     }
 

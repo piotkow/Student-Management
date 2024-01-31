@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using StudentManagement.Models.Entities;
+using StudentManagement.Services.DTOs.Training;
 using StudentManagement.Services.Interfaces;
 using StudentManagment.Data.Repositories.Interfaces;
 using StudentManagment.Data.UnitOfWork;
@@ -29,10 +30,13 @@ namespace StudentManagement.Services.Services
             return await _unitOfWork.TrainingRepository.GetTrainingByIdAsync(trainingId);
         }
 
-        public async Task InsertTrainingAsync(Training training)
+        public async Task<Training> InsertTrainingAsync(TrainingRequest trainingReq)
         {
+            await _unitOfWork.BeginTransactionAsync();
+            var training = _mapper.Map<Training>(trainingReq);
             await _unitOfWork.TrainingRepository.InsertTrainingAsync(training);
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.CommitAsync();
+            return training;
         }
 
         public async Task DeleteTrainingAsync(int trainingId)
@@ -41,11 +45,17 @@ namespace StudentManagement.Services.Services
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task UpdateTrainingAsync(Training training)
+        public async Task UpdateTrainingAsync(int trainingId, TrainingRequest trainingReq)
         {
+            await _unitOfWork.BeginTransactionAsync();
+            var training = await _unitOfWork.TrainingRepository.GetTrainingByIdAsync(trainingId);
+            training.Location = trainingReq.Location;
+            training.Topic = trainingReq.Topic;
+            training.StartDate = trainingReq.StartDate;
+            training.EndDate = trainingReq.EndDate;
             await _unitOfWork.TrainingRepository.UpdateTrainingAsync(training);
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.CommitAsync();
         }
-    }
 
+    }
 }

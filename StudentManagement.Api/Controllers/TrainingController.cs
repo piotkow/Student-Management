@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudentManagement.Models.Entities;
+using StudentManagement.Services.DTOs.Training;
 using StudentManagement.Services.Interfaces;
 using StudentManagment.Data;
 
@@ -46,25 +47,20 @@ namespace StudentManagement.Api.Controllers
 
         // PUT: api/Trainings/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTraining(int id, Training training)
+        public async Task<IActionResult> PutTraining(int id, [FromBody]TrainingRequest trainingReq)
         {
-            if (id != training.TrainingID)
-            {
-                return BadRequest();
-            }
-
-            await _trainingService.UpdateTrainingAsync(training);
+            await _trainingService.UpdateTrainingAsync(id, trainingReq);
 
             return NoContent();
         }
 
         // POST: api/Trainings
         [HttpPost]
-        public async Task<ActionResult<Training>> PostTraining(Training training)
+        public async Task<ActionResult<Training>> PostTraining([FromBody]TrainingRequest trainingReq)
         {
-            await _trainingService.InsertTrainingAsync(training);
+            var insertedTraining = await _trainingService.InsertTrainingAsync(trainingReq);
 
-            return CreatedAtAction("GetTraining", new { id = training.TrainingID }, training);
+            return CreatedAtAction("GetTraining", new { id = insertedTraining.TrainingID }, insertedTraining);
         }
 
         // DELETE: api/Trainings/5

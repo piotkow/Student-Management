@@ -1,4 +1,5 @@
 ﻿using StudentManagement.Models.Entities;
+using StudentManagement.Services.DTOs.Training;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,8 +9,8 @@ namespace StudentManagement.Services.Interfaces
     {
         Task<IEnumerable<Training>> GetTrainingsAsync();  
         Task<Training> GetTrainingByIdAsync(int trainingId); 
-        Task InsertTrainingAsync(Training training);  
+        Task<Training> InsertTrainingAsync(TrainingRequest trainingReq);  
         Task DeleteTrainingAsync(int trainingId);  
-        Task UpdateTrainingAsync(Training training);  
+        Task UpdateTrainingAsync(int trainingId, TrainingRequest trainingReq);  
     }
 }

@@ -1,4 +1,5 @@
 ﻿using StudentManagement.Models.Entities;
+using StudentManagement.Services.DTOs.Course;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,8 @@ namespace StudentManagement.Services.Interfaces
     {
         Task<IEnumerable<Course>> GetCoursesAsync();
         Task<Course> GetCourseByIdAsync(int courseId);
-        Task InsertCourseAsync(Course course);
+        Task<Course> InsertCourseAsync(CourseRequest course);
         Task DeleteCourseAsync(int courseId);
-        Task UpdateCourseAsync(Course course);
+        Task UpdateCourseAsync(int courseId, CourseRequest course);
     }
 }

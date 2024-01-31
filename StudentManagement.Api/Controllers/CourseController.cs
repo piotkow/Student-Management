@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StudentManagement.Models.Entities;
+using StudentManagement.Services.DTOs.Course;
 using StudentManagement.Services.Interfaces;
 
 namespace StudentManagement.Api.Controllers
@@ -37,24 +38,19 @@ namespace StudentManagement.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCourse(int id, Course course)
+        public async Task<IActionResult> PutCourse(int id,[FromBody]CourseRequest courseReq)
         {
-            if (id != course.CourseID)
-            {
-                return BadRequest();
-            }
+            await _courseService.UpdateCourseAsync(id,courseReq);
 
-            await _courseService.UpdateCourseAsync(course);
-
-            return NoContent();
+            return Ok(courseReq);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Course>> PostCourse(Course course)
+        public async Task<ActionResult<Course>> PostCourse([FromBody]CourseRequest courseReq)
         {
-            await _courseService.InsertCourseAsync(course);
+            var insertedCourse = await _courseService.InsertCourseAsync(courseReq);
 
-            return CreatedAtAction("GetCourse", new { id = course.CourseID }, course);
+            return CreatedAtAction("GetCourse", new { id = insertedCourse.CourseID }, insertedCourse);
         }
 
         [HttpDelete("{id}")]

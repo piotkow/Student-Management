@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
+using AutoMapper.Configuration.Conventions;
 using StudentManagement.Models.Entities;
+using StudentManagement.Services.DTOs.Course;
+using StudentManagement.Services.DTOs.Training;
 using StudentManagement.Services.DTOs.User;
 using System;
 using System.Collections.Generic;
@@ -23,6 +26,17 @@ namespace StudentManagement.Services.MappingProfile
             .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(src => src.DateOfBirth))
             .ForMember(dest => dest.Avatar, opt => opt.MapFrom(src => src.Avatar))
             .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.Phone));
+
+            CreateMap<CourseRequest, Course>()
+                .ForMember(dest => dest.CourseID, opt => opt.Ignore())
+                .ForMember(dest => dest.CourseName, opt => opt.MapFrom(src => src.CourseName))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description));
+            CreateMap<TrainingRequest, Training>()
+                .ForMember(dest => dest.TrainingID, opt => opt.Ignore())
+                .ForMember(dest => dest.Topic, opt => opt.MapFrom(src => src.Topic))
+                .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate))
+                .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate))
+                .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Location));
         }
     }
 }

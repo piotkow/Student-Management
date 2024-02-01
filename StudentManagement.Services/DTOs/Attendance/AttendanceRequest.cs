@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StudentManagement.Services.DTOs
+namespace StudentManagement.Services.DTOs.Attendance
 {
     public class AttendanceRequest
     {

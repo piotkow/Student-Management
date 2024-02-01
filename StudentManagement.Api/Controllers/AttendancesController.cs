@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudentManagement.Models.Entities;
-using StudentManagement.Services.DTOs;
+using StudentManagement.Services.DTOs.Attendance;
 using StudentManagement.Services.Interfaces;
 using StudentManagment.Data;
 
@@ -72,6 +72,14 @@ namespace StudentManagement.Api.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("byTraining/{trainingId}")]
+        public async Task<IActionResult> GetAttendanceByTrainingId(int trainingId)
+        {
+                var attendance = await _attendanceService.GetAttendanceByTrainingId(trainingId);
+                return Ok(attendance);
+        }
+
     }
 
 }

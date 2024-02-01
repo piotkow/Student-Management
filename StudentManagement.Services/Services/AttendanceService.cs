@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using StudentManagement.Models.Entities;
-using StudentManagement.Services.DTOs;
+using StudentManagement.Services.DTOs.Attendance;
 using StudentManagement.Services.Interfaces;
 using StudentManagment.Data.Repositories.Interfaces;
 using StudentManagment.Data.UnitOfWork;
@@ -59,6 +59,17 @@ namespace StudentManagement.Services.Services
             await _unitOfWork.AttendanceRepository.UpdateAttendanceAsync(attendance);
             await _unitOfWork.CommitAsync();
         }
+
+        public async Task<IEnumerable<AttendanceUserResponse>> GetAttendanceByTrainingId(int trainingId)
+        {
+            await _unitOfWork.BeginTransactionAsync();
+            var attendanceList = await _unitOfWork.AttendanceRepository.GetAttendancesAsync();
+            attendanceList = attendanceList.Where(at => at.TrainingID == trainingId);
+            var attendanceUserResponses = _mapper.Map<IEnumerable<Attendance>, IEnumerable<AttendanceUserResponse>>(attendanceList);
+            await _unitOfWork.CommitAsync();
+            return attendanceUserResponses;
+        }
+
     }
 
 }

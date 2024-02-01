@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using StudentManagement.Models.Entities;
+using StudentManagement.Services.DTOs.Attendance;
 using StudentManagement.Services.Interfaces;
 using StudentManagement.Services.MappingProfile;
 using StudentManagement.Services.Services;
@@ -55,6 +56,7 @@ builder.Services.AddSwaggerGen(opt =>
 });
 
 
+
 builder.Services.AddAuthentication(opt =>
 {
     opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -78,7 +80,13 @@ builder.Services.AddAuthorization();
 var mapperConfig = new MapperConfiguration(mc =>
 {
     mc.AddProfile(new MappingProfile());
+    mc.CreateMap<Attendance, AttendanceUserResponse>()
+    .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.User.FirstName))
+    .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.User.LastName))
+    .PreserveReferences();
 });
+
+
 
 IMapper mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);

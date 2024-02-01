@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.Configuration.Conventions;
 using StudentManagement.Models.Entities;
-using StudentManagement.Services.DTOs;
+using StudentManagement.Services.DTOs.Attendance;
 using StudentManagement.Services.DTOs.Course;
 using StudentManagement.Services.DTOs.Training;
 using StudentManagement.Services.DTOs.User;
@@ -46,6 +46,12 @@ namespace StudentManagement.Services.MappingProfile
                 .ForMember(dest => dest.UserID, opt => opt.MapFrom(src => src.UserID))
                 .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date))
                 .ForMember(dest => dest.Present, opt => opt.MapFrom(src => src.Present));
+
+            CreateMap<Attendance, AttendanceUserResponse>()
+                .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date))
+                .ForMember(dest => dest.Present, opt => opt.MapFrom(src => src.Present))
+                .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.User.FirstName))
+                .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.User.LastName));
         }
     }
 }

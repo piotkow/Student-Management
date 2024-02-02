@@ -23,6 +23,34 @@ namespace StudentManagment.Data.Repositories.Repositories
             return await _context.CourseTrainings.ToListAsync();
         }
 
+        public async Task<IEnumerable<CourseTraining>> GetCourseTrainingsByCourseIdAsync(int courseId)
+        {
+             return await _context.CourseTrainings.Join(
+                _context.Trainings,
+                ct => ct.TrainingID,
+                t => t.TrainingID,
+                (uc, t) => new CourseTraining
+                {
+                    CourseID = uc.CourseID,
+                    Course = null,
+                    TrainingID = t.TrainingID,
+                    Training = new Training
+                    {
+                        TrainingID = t.TrainingID,
+                        Location = t.Location,
+                        StartDate = t.StartDate,
+                        EndDate = t.EndDate,
+                        Topic = t.Topic,
+                        Attendances = null,
+                        CourseTrainings = null,
+                        Grades = null
+                    }
+                }
+            )
+            .Where(ct => ct.CourseID== courseId)
+            .ToListAsync();
+        }
+
         public async Task<CourseTraining> GetCourseTrainingByIdAsync(int courseId, int trainingId)
         {
             return await _context.CourseTrainings

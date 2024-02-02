@@ -27,6 +27,11 @@ namespace StudentManagement.Services.Services
             return await _unitOfWork.CourseTrainingRepository.GetCourseTrainingsAsync();
         }
 
+        public async Task<IEnumerable<CourseTraining>> GetCourseTrainingsByCourseIdAsync(int courseId)
+        {
+            return await _unitOfWork.CourseTrainingRepository.GetCourseTrainingsByCourseIdAsync(courseId);
+        }
+
         public async Task<CourseTraining> GetCourseTrainingByIdAsync(int courseId, int trainingId)
         {
             return await _unitOfWork.CourseTrainingRepository.GetCourseTrainingByIdAsync(courseId, trainingId);

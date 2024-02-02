@@ -23,6 +23,13 @@ namespace StudentManagement.Api.Controllers
             return Ok(userCourses);
         }
 
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<IEnumerable<UserCourse>>> GetUserCoursesByUserId(int userId)
+        {
+            var userCourses = await _userCourseService.GetUserCoursesByUserIdAsync(userId);
+            return Ok(userCourses);
+        }
+
         [HttpGet("{userId}/{courseId}")]
         public async Task<ActionResult<UserCourse>> GetUserCourse(int userId, int courseId)
         {

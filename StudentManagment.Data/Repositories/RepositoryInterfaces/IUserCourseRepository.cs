@@ -10,6 +10,7 @@ namespace StudentManagment.Data.Repositories.Interfaces
     public interface IUserCourseRepository : IDisposable
     {
         Task<IEnumerable<UserCourse>> GetUserCoursesAsync();
+        Task<IEnumerable<UserCourse>> GetUserCoursesByUserIdAsync(int userId);
         Task<UserCourse> GetUserCourseByIdAsync(int userId, int courseId);
         Task InsertUserCourseAsync(UserCourse userCourse);
         Task UpdateUserCourseAsync(UserCourse userCourse);

@@ -1,4 +1,5 @@
 ﻿using StudentManagement.Models.Entities;
+using StudentManagement.Services.DTOs.Attendance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,9 @@ namespace StudentManagement.Services.Interfaces
     {
         Task<IEnumerable<Attendance>> GetAttendancesAsync();
         Task<Attendance> GetAttendanceByIdAsync(int attendanceId);
-        Task InsertAttendanceAsync(Attendance attendance);
+        Task<Attendance> InsertAttendanceAsync(AttendanceRequest attendanceReq);
         Task DeleteAttendanceAsync(int attendanceId);
-        Task UpdateAttendanceAsync(Attendance attendance);
+        Task UpdateAttendanceAsync(int attendanceId, AttendanceRequest attendanceReq);
+        Task<IEnumerable<AttendanceUserResponse>> GetAttendanceByTrainingId(int trainingId);
     }
 }

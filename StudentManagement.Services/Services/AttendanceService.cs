@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using StudentManagement.Models.Entities;
+using StudentManagement.Services.DTOs.Attendance;
 using StudentManagement.Services.Interfaces;
 using StudentManagment.Data.Repositories.Interfaces;
 using StudentManagment.Data.UnitOfWork;
@@ -32,10 +33,13 @@ namespace StudentManagement.Services.Services
             return await _unitOfWork.AttendanceRepository.GetAttendanceByIdAsync(attendanceId);
         }
 
-        public async Task InsertAttendanceAsync(Attendance attendance)
+        public async Task<Attendance> InsertAttendanceAsync(AttendanceRequest attendanceReq)
         {
+            await _unitOfWork.BeginTransactionAsync();
+            var attendance = _mapper.Map<Attendance>(attendanceReq);
             await _unitOfWork.AttendanceRepository.InsertAttendanceAsync(attendance);
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.CommitAsync();
+            return attendance;
         }
 
         public async Task DeleteAttendanceAsync(int attendanceId)
@@ -44,11 +48,28 @@ namespace StudentManagement.Services.Services
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task UpdateAttendanceAsync(Attendance attendance)
+        public async Task UpdateAttendanceAsync(int attendanceId, AttendanceRequest attendanceReq)
         {
+            await _unitOfWork.BeginTransactionAsync();
+            var attendance = await _unitOfWork.AttendanceRepository.GetAttendanceByIdAsync(attendanceId);
+            attendance.TrainingID = attendanceReq.TrainingID;
+            attendance.Date = attendanceReq.Date;
+            attendance.Present = attendanceReq.Present;
+            attendance.UserID = attendanceReq.UserID;
             await _unitOfWork.AttendanceRepository.UpdateAttendanceAsync(attendance);
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.CommitAsync();
         }
+
+        public async Task<IEnumerable<AttendanceUserResponse>> GetAttendanceByTrainingId(int trainingId)
+        {
+            await _unitOfWork.BeginTransactionAsync();
+            var attendanceList = await _unitOfWork.AttendanceRepository.GetAttendancesAsync();
+            attendanceList = attendanceList.Where(at => at.TrainingID == trainingId);
+            var attendanceUserResponses = _mapper.Map<IEnumerable<Attendance>, IEnumerable<AttendanceUserResponse>>(attendanceList);
+            await _unitOfWork.CommitAsync();
+            return attendanceUserResponses;
+        }
+
     }
 
 }

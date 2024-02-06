@@ -20,7 +20,7 @@ namespace StudentManagment.Data.Repositories.Repositories
 
         public async Task<IEnumerable<Attendance>> GetAttendancesAsync()
         {
-            return await _context.Attendances.ToListAsync();
+            return await _context.Attendances.Include(a=>a.User).ToListAsync();
         }
 
         public async Task<Attendance> GetAttendanceByIdAsync(int id)

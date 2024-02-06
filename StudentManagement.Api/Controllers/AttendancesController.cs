@@ -7,13 +7,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudentManagement.Models.Entities;
+using StudentManagement.Services.DTOs.Attendance;
 using StudentManagement.Services.Interfaces;
 using StudentManagment.Data;
 
 namespace StudentManagement.Api.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController, Authorize]
+    [ApiController]
     public class AttendancesController : ControllerBase
     {
         private readonly IAttendanceService _attendanceService;
@@ -47,25 +48,20 @@ namespace StudentManagement.Api.Controllers
 
         // PUT: api/Attendances/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAttendance(int id, Attendance attendance)
+        public async Task<IActionResult> PutAttendance(int id,[FromBody]AttendanceRequest attendanceReq)
         {
-            if (id != attendance.AttendanceID)
-            {
-                return BadRequest();
-            }
+            await _attendanceService.UpdateAttendanceAsync(id, attendanceReq);
 
-            await _attendanceService.UpdateAttendanceAsync(attendance);
-
-            return NoContent();
+            return Ok(attendanceReq);
         }
 
         // POST: api/Attendances
         [HttpPost]
-        public async Task<ActionResult<Attendance>> PostAttendance(Attendance attendance)
+        public async Task<ActionResult<Attendance>> PostAttendance([FromBody]AttendanceRequest attendanceReq)
         {
-            await _attendanceService.InsertAttendanceAsync(attendance);
+            var insertedAttendance = await _attendanceService.InsertAttendanceAsync(attendanceReq);
 
-            return CreatedAtAction("GetAttendance", new { id = attendance.AttendanceID }, attendance);
+            return CreatedAtAction("GetAttendance", new { id = insertedAttendance.AttendanceID }, insertedAttendance);
         }
 
         // DELETE: api/Attendances/5
@@ -76,6 +72,14 @@ namespace StudentManagement.Api.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("byTraining/{trainingId}")]
+        public async Task<IActionResult> GetAttendanceByTrainingId(int trainingId)
+        {
+                var attendance = await _attendanceService.GetAttendanceByTrainingId(trainingId);
+                return Ok(attendance);
+        }
+
     }
 
 }

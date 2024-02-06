@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using StudentManagment.Data.Repositories.Interfaces;
 using StudentManagment.Data.UnitOfWork;
+using StudentManagement.Services.DTOs.Grade;
 
 namespace StudentManagement.Services.Services
 {
@@ -30,10 +31,13 @@ namespace StudentManagement.Services.Services
             return await _unitOfWork.GradeRepository.GetGradeByIdAsync(gradeId);
         }
 
-        public async Task InsertGradeAsync(Grade grade)
+        public async Task<Grade> InsertGradeAsync(GradeRequest gradeReq)
         {
+            await _unitOfWork.BeginTransactionAsync();
+            var grade = _mapper.Map<Grade>(gradeReq);
             await _unitOfWork.GradeRepository.InsertGradeAsync(grade);
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.CommitAsync();
+            return grade;
         }
 
         public async Task DeleteGradeAsync(int gradeId)
@@ -42,10 +46,16 @@ namespace StudentManagement.Services.Services
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task UpdateGradeAsync(Grade grade)
+        public async Task UpdateGradeAsync(int gradeId, GradeRequest gradeReq)
         {
+            await _unitOfWork.BeginTransactionAsync();
+            var grade = await _unitOfWork.GradeRepository.GetGradeByIdAsync(gradeId);
+            grade.UserID = gradeReq.UserID;
+            grade.TrainingID = gradeReq.TrainingID;
+            grade.Score = gradeReq.Score;
+            grade.Remarks = gradeReq.Remarks;
             await _unitOfWork.GradeRepository.UpdateGradeAsync(grade);
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.CommitAsync();
         }
     }
 

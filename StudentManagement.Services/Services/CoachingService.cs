@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using StudentManagement.Models.Entities;
+using StudentManagement.Services.DTOs.Coaching;
 using StudentManagement.Services.Interfaces;
 using StudentManagment.Data.Repositories.Interfaces;
 using StudentManagment.Data.UnitOfWork;
@@ -32,10 +33,13 @@ namespace StudentManagement.Services.Services
             return await _unitOfWork.CoachingRepository.GetCoachingByIdAsync(coachingId);
         }
 
-        public async Task InsertCoachAsync(Coaching coaching)
+        public async Task<Coaching> InsertCoachAsync(CoachingRequest coachingReq)
         {
+            await _unitOfWork.BeginTransactionAsync();
+            var coaching = _mapper.Map<Coaching>(coachingReq);
             await _unitOfWork.CoachingRepository.InsertCoachingAsync(coaching);
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.CommitAsync();
+            return coaching;
         }
 
         public async Task DeleteCoachAsync(int coachingId)
@@ -44,10 +48,17 @@ namespace StudentManagement.Services.Services
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task UpdateCoachAsync(Coaching coaching)
+        public async Task UpdateCoachAsync(int coachingId, CoachingRequest coachingReq)
         {
+            await _unitOfWork.BeginTransactionAsync();
+            var coaching = await _unitOfWork.CoachingRepository.GetCoachingByIdAsync(coachingId);
+            coaching.Location = coachingReq.Location;
+            coaching.StartDate = coachingReq.StartDate;
+            coaching.EndDate = coachingReq.EndDate;
+            coaching.Topic = coachingReq.Topic;
+            coaching.Feedback = coachingReq.Feedback;
             await _unitOfWork.CoachingRepository.UpdateCoachingAsync(coaching);
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.CommitAsync();
         }
     }
 

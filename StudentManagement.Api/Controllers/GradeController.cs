@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudentManagement.Models.Entities;
+using StudentManagement.Services.DTOs.Grade;
 using StudentManagement.Services.Interfaces;
 using StudentManagment.Data;
 
@@ -46,25 +47,20 @@ namespace StudentManagement.Api.Controllers
 
         // PUT: api/Grades/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutGrade(int id, Grade grade)
+        public async Task<IActionResult> PutGrade(int id, [FromBody]GradeRequest gradeReq)
         {
-            if (id != grade.GradeID)
-            {
-                return BadRequest();
-            }
+            await _gradeService.UpdateGradeAsync(id, gradeReq);
 
-            await _gradeService.UpdateGradeAsync(grade);
-
-            return NoContent();
+            return Ok(gradeReq);
         }
 
         // POST: api/Grades
         [HttpPost]
-        public async Task<ActionResult<Grade>> PostGrade(Grade grade)
+        public async Task<ActionResult<Grade>> PostGrade([FromBody]GradeRequest gradeReq)
         {
-            await _gradeService.InsertGradeAsync(grade);
+            var insertedGrade = await _gradeService.InsertGradeAsync(gradeReq);
 
-            return CreatedAtAction("GetGrade", new { id = grade.GradeID }, grade);
+            return CreatedAtAction("GetGrade", new { id = insertedGrade.GradeID }, insertedGrade);
         }
 
         // DELETE: api/Grades/5

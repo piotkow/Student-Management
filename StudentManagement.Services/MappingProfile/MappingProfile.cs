@@ -2,7 +2,9 @@
 using AutoMapper.Configuration.Conventions;
 using StudentManagement.Models.Entities;
 using StudentManagement.Services.DTOs.Attendance;
+using StudentManagement.Services.DTOs.Coaching;
 using StudentManagement.Services.DTOs.Course;
+using StudentManagement.Services.DTOs.Grade;
 using StudentManagement.Services.DTOs.Training;
 using StudentManagement.Services.DTOs.User;
 using System;
@@ -52,6 +54,21 @@ namespace StudentManagement.Services.MappingProfile
                 .ForMember(dest => dest.Present, opt => opt.MapFrom(src => src.Present))
                 .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.User.FirstName))
                 .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.User.LastName));
+
+            CreateMap<CoachingRequest, Coaching>()
+                .ForMember(dest => dest.CoachingID, opt => opt.Ignore())
+                .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Location))
+                .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate))
+                .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate))
+                .ForMember(dest => dest.Topic, opt => opt.MapFrom(src => src.Topic))
+                .ForMember(dest => dest.Feedback, opt => opt.MapFrom(src => src.Feedback));
+
+            CreateMap<GradeRequest, Grade>()
+                .ForMember(dest => dest.GradeID, opt => opt.Ignore())
+                .ForMember(dest => dest.UserID, opt => opt.MapFrom(src => src.UserID))
+                .ForMember(dest => dest.TrainingID, opt => opt.MapFrom(src => src.TrainingID))
+                .ForMember(dest => dest.Score, opt => opt.MapFrom(src => src.Score))
+                .ForMember(dest => dest.Remarks, opt => opt.MapFrom(src => src.Remarks));
         }
     }
 }

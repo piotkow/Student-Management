@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StudentManagement.Models.Entities;
+using StudentManagement.Services.DTOs.Coaching;
 using StudentManagement.Services.Interfaces;
 
 namespace StudentManagement.Api.Controllers
@@ -37,24 +38,19 @@ namespace StudentManagement.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCoach(int id, Coaching coach)
+        public async Task<IActionResult> PutCoach(int id, [FromBody]CoachingRequest coachingReq)
         {
-            if (id != coach.CoachingID)
-            {
-                return BadRequest();
-            }
+            await _coachingService.UpdateCoachAsync(id,coachingReq);
 
-            await _coachingService.UpdateCoachAsync(coach);
-
-            return NoContent();
+            return Ok(coachingReq);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Coaching>> PostCoach(Coaching coach)
+        public async Task<ActionResult<Coaching>> PostCoach(CoachingRequest coachingReq)
         {
-            await _coachingService.InsertCoachAsync(coach);
+            var insertedCoaching = await _coachingService.InsertCoachAsync(coachingReq);
 
-            return CreatedAtAction("GetCoach", new { id = coach.CoachingID }, coach);
+            return CreatedAtAction("GetCoach", new { id = insertedCoaching.CoachingID }, insertedCoaching);
         }
 
         [HttpDelete("{id}")]

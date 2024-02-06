@@ -1,4 +1,5 @@
 ﻿using StudentManagement.Models.Entities;
+using StudentManagement.Services.DTOs.Coaching;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,8 @@ namespace StudentManagement.Services.Interfaces
     {
         Task<IEnumerable<Coaching>> GetCoachesAsync();
         Task<Coaching> GetCoachByIdAsync(int coachingId);
-        Task InsertCoachAsync(Coaching coaching);
+        Task<Coaching> InsertCoachAsync(CoachingRequest coachingReq);
         Task DeleteCoachAsync(int coachingId);
-        Task UpdateCoachAsync(Coaching coaching);
+        Task UpdateCoachAsync(int coachingId, CoachingRequest coachingReq);
     }
 }

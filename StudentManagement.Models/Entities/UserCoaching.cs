@@ -7,16 +7,19 @@ using System.Threading.Tasks;
 
 namespace StudentManagement.Models.Entities
 {
-    public class UserCourse
+    public class UserCoaching
     {
         [ForeignKey("Users")]
         public int UserID { get; set; }
+
         public User User { get; set; }
 
         public Role Role { get; set; }
 
-        [ForeignKey("Courses")]
-        public int CourseID { get; set; }
-        public Course Course { get; set; }
+
+        [ForeignKey("Coachings")]
+        public int CoachingID { get; set; }
+
+        public Coaching Coaching { get; set; }
     }
 }

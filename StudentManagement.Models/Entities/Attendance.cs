@@ -14,8 +14,8 @@ namespace StudentManagement.Models.Entities
         [Key]
         public int AttendanceID { get; set; }
 
-        [ForeignKey("Students")]
-        public int StudentID { get; set; }
+        [ForeignKey("Users")]
+        public int UserID { get; set; }
 
         [ForeignKey("Trainings")]
         public int TrainingID { get; set; }
@@ -27,5 +27,7 @@ namespace StudentManagement.Models.Entities
         public bool Present { get; set; } 
 
         public virtual Training Training { get; set;}
+
+        public virtual User User { get; set; }
     }
 }

@@ -18,70 +18,54 @@ namespace StudentManagment.Data
         public DbSet<Course> Courses { get; set; }
         public DbSet<CourseTraining> CourseTrainings { get; set; }
         public DbSet<Grade> Grades { get; set; }
-        public DbSet<Instructor> Instructors { get; set; }
-        public DbSet<Student> Students { get; set; }
-        //public DbSet<StudentCourse> StudentCourses { get; set; }
+
         public DbSet<UserCourse> UserCourses { get; set; }
+        public DbSet<UserCoaching> UserCoachings { get; set; }
         public DbSet<Training> Trainings { get; set; }
         public DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StudentManagmentDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=TestDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CourseTraining>().HasKey(ep => new {ep.CourseID, ep.TrainingID});
             modelBuilder.Entity<UserCourse>().HasKey(ep => new { ep.UserID, ep.CourseID });
+            modelBuilder.Entity<UserCoaching>().HasKey(ep => new { ep.UserID, ep.CoachingID });
 
-            // One-to-Many relationship: Course - UserCourse
+            // One-to-Many relationship: Course - UserCourses
             modelBuilder.Entity<UserCourse>()
-                .HasOne<Course>(sc => sc.Course)
+                .HasOne<Course>(uc => uc.Course)
                 .WithMany(c => c.UserCourses)
-                .HasForeignKey(sc => sc.CourseID)
+                .HasForeignKey(uc => uc.CourseID)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // One-to-Many relationship: User - UserCourse
+            // One-to-Many relationship: User - UserCourses
             modelBuilder.Entity<UserCourse>()
-                .HasOne<User>(sc => sc.User)
+                .HasOne<User>(uc => uc.User)
                 .WithMany(c => c.UserCourses)
-                .HasForeignKey(sc => sc.CourseID)
+                .HasForeignKey(uc => uc.UserID)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // One-to-One relationship: User - Instructor
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.Instructor)
-                .WithOne(i => i.User)
-                .HasForeignKey<Instructor>(i => i.UserID)
+            // One-to-Many relationship: Coaching - UserCoaching
+            modelBuilder.Entity<UserCoaching>()
+                .HasOne<Coaching>(uc => uc.Coaching)
+                .WithMany(c => c.UserCoachings)
+                .HasForeignKey(uc => uc.CoachingID)
                 .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
-            // One-to-One relationship: User - Student
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.Student)
-                .WithOne(i => i.User)
-                .HasForeignKey<Student>(i => i.UserID)
+            // One-to-Many relationship: User - UserCoaching
+            modelBuilder.Entity<UserCoaching>()
+                .HasOne<User>(uc => uc.User)
+                .WithMany(c => c.UserCoachings)
+                .HasForeignKey(uc => uc.UserID)
                 .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
-
-            // One-to-Many relationship: Instructor - Course
-            modelBuilder.Entity<Course>()
-                .HasOne(c => c.Instructor)
-                .WithMany(i => i.Courses)
-                .HasForeignKey(i => i.InstructorID)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
-
-            // One-to-Many relationship: Instructor - Coaching
-            modelBuilder.Entity<Coaching>()
-                .HasOne<Instructor>(co => co.Instructor)
-                .WithMany(i => i.Coachings)
-                .HasForeignKey(co => co.InstructorID)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             // One-to-Many relationship: Course - CourseTraining
             modelBuilder.Entity<CourseTraining>()
@@ -115,39 +99,78 @@ namespace StudentManagment.Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 
+            // One-to-Many relationship: User - Attendance
+            modelBuilder.Entity<Attendance>()
+                .HasOne<User>(a => a.User)
+                .WithMany(u => u.Attendances)
+                .HasForeignKey(a => a.UserID)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // One-to-Many relationship: User - Grade
+            modelBuilder.Entity<Grade>()
+                .HasOne<User>(g => g.User)
+                .WithMany(u => u.Grades)
+                .HasForeignKey(g => g.UserID)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
 
             modelBuilder.Entity<User>().HasData(
-                new User { UserID = 1, Username = "AdminUser", Password = "Admin123", Role = Role.Administrator, Email = "admin@example.com" },
-                new User { UserID = 2, Username = "InstructorUser", Password = "Instructor123", Role = Role.Instructor, Email = "instructor@example.com" },
-                new User { UserID = 3, Username = "StudentUser", Password = "Student123", Role = Role.Student, Email = "student@example.com" }
-
-            );
-
-            modelBuilder.Entity<Student>().HasData(
-                new Student { StudentID = 1, UserID = 1, FirstName = "John", LastName = "Doe", DateOfBirth = new DateTime(2000, 1, 1), Phone = "1234567890", Address = "123 Main St" },
-                new Student { StudentID = 2, UserID = 2, FirstName = "Jane", LastName = "Doe", DateOfBirth = new DateTime(2001, 2, 2), Phone = "0987654321", Address = "456 Elm St" }
-);
-
-            modelBuilder.Entity<Instructor>().HasData(
-                new Instructor { InstructorID = 1, UserID = 2, FirstName = "John", LastName = "Doe", DateOfBirth = DateTime.Now.AddYears(-30), Phone = "123456789", Address = "123 Main St" },
-                new Instructor { InstructorID = 2, UserID = 3, FirstName = "Jane", LastName = "Smith", DateOfBirth = DateTime.Now.AddYears(-28), Phone = "987654321", Address = "456 Oak St" }
-
+                new User
+                {
+                    UserID = 1,
+                    Username = "AdminUser",
+                    Password = "Admin123",
+                    Role = Role.Administrator,
+                    Email = "admin@example.com",
+                    FirstName = "Admin",
+                    LastName = "Admin",
+                    DateOfBirth = new DateTime(1990, 1, 1),
+                    Phone = "123-456-789",
+                    Avatar= "https://images.unsplash.com/photo-1593085512500-5d55148d6f0d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDExfHx8ZW58MHx8fHx8"
+                },
+                new User
+                {
+                    UserID = 2,
+                    Username = "InstructorUser",
+                    Password = "Instructor123",
+                    Role = Role.Instructor,
+                    Email = "instructor@example.com",
+                    FirstName = "Instructor",
+                    LastName = "Instructor",
+                    DateOfBirth = new DateTime(1980, 1, 1),
+                    Phone = "987-654-321",
+                    Avatar= "https://images.unsplash.com/photo-1610981755415-3f7c9202cccb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEzfHx8ZW58MHx8fHx8"
+                },
+                new User
+                {
+                    UserID = 3,
+                    Username = "StudentUser",
+                    Password = "Student123",
+                    Role = Role.Student,
+                    Email = "student@example.com",
+                    FirstName = "Student",
+                    LastName = "Student",
+                    DateOfBirth = new DateTime(2000, 1, 1),
+                    Phone = "555-123-456",
+                    Avatar= "https://images.unsplash.com/photo-1638803040283-7a5ffd48dad5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDl8fHxlbnwwfHx8fHw%3D"
+                }
             );
 
             modelBuilder.Entity<Course>().HasData(
-                new Course { CourseID = 1,InstructorID=1, CourseName = "Introduction to Programming", Description = "Learn the basics of programming" },
-                new Course { CourseID = 2, InstructorID = 1, CourseName = "Physics 101", Description = "Introduction to Physics" },
-                new Course { CourseID = 3, InstructorID = 2, CourseName = "Mathematics Fundamentals", Description = "Basic math concepts" }
+                new Course { CourseID = 1, CourseName = "Introduction to Programming", Description = "Learn the basics of programming" },
+                new Course { CourseID = 2, CourseName = "Physics 101", Description = "Introduction to Physics" },
+                new Course { CourseID = 3, CourseName = "Mathematics Fundamentals", Description = "Basic math concepts" }
   
             );
 
             modelBuilder.Entity<UserCourse>().HasData(
-                new UserCourse { UserID = 3, CourseID = 1 },
-                new UserCourse { UserID = 3, CourseID = 2 },
-                new UserCourse { UserID = 3, CourseID = 3 }
+                new UserCourse { UserID = 3, Role = Role.Student, CourseID = 1 },
+                new UserCourse { UserID = 3, Role = Role.Student, CourseID = 2 },
+                new UserCourse { UserID = 2, Role = Role.Instructor, CourseID = 3 }
 
             );
-
 
             modelBuilder.Entity<CourseTraining>().HasData(
                 new CourseTraining { CourseID = 1, TrainingID = 1 },
@@ -164,25 +187,27 @@ namespace StudentManagment.Data
             );
 
             modelBuilder.Entity<Coaching>().HasData(
-                new Coaching { CoachingID = 1, InstructorID = 1, Location = "Room X", StartDate = DateTime.Now.AddMonths(1), EndDate = DateTime.Now.AddMonths(2), Topic = "Advanced Programming", Feedback = "Good performance" },
-                new Coaching { CoachingID = 2, InstructorID = 2, Location = "Room Y", StartDate = DateTime.Now.AddMonths(2), EndDate = DateTime.Now.AddMonths(3), Topic = "Advanced Physics", Feedback = "Excellent participation" }
+                new Coaching { CoachingID = 1, Location = "Room X", StartDate = DateTime.Now.AddMonths(1), EndDate = DateTime.Now.AddMonths(2), Topic = "Advanced Programming", Feedback = "Good performance" },
+                new Coaching { CoachingID = 2, Location = "Room Y", StartDate = DateTime.Now.AddMonths(2), EndDate = DateTime.Now.AddMonths(3), Topic = "Advanced Physics", Feedback = "Excellent participation" }
+            );
+
+            modelBuilder.Entity<UserCoaching>().HasData(
+                new UserCoaching { UserID = 3, Role = Role.Student, CoachingID = 1 },
+                new UserCoaching { UserID = 3, Role = Role.Student, CoachingID = 2 },
+                new UserCoaching { UserID = 2, Role = Role.Instructor, CoachingID = 1 }
+
             );
 
             modelBuilder.Entity<Attendance>().HasData(
-                new Attendance { AttendanceID = 1, StudentID = 3, TrainingID = 1, Date = DateTime.Now.AddMonths(1), Present = true },
-                new Attendance { AttendanceID = 2, StudentID = 3, TrainingID = 2, Date = DateTime.Now.AddMonths(2), Present = false }
+                new Attendance { AttendanceID = 1, UserID = 3, TrainingID = 1, Date = DateTime.Now.AddMonths(1), Present = true },
+                new Attendance { AttendanceID = 2, UserID = 3, TrainingID = 2, Date = DateTime.Now.AddMonths(2), Present = false }
             );
 
             modelBuilder.Entity<Grade>().HasData(
-                new Grade { GradeID = 1, StudentID = 3, TrainingID = 1, Score = 90, Remarks = "Good performance" },
-                new Grade { GradeID = 2, StudentID = 3, TrainingID = 2, Score = 95, Remarks = "Excellent work" }
+                new Grade { GradeID = 1, UserID = 3, TrainingID = 1, Score = 90, Remarks = "Good performance" },
+                new Grade { GradeID = 2, UserID = 3, TrainingID = 2, Score = 95, Remarks = "Excellent work" }
             );
-
-
             base.OnModelCreating(modelBuilder);
-
         }
-
-
     }
 }
